@@ -34,18 +34,31 @@ body{color:#eee;font:15px/1.45 system-ui,sans-serif;min-height:100vh;background:
 </div>
 <script>
 // Pagina del link della mail: apre DZ App con la chiave, oppure la scarica. Senza Android: installazione nel browser.
+// os=ios / os=android (tasti della mail) decide quali passi mostrare; senza, decide il telefono.
 var APK='https://github.com/milkbarandcoffe-web/app-install/releases/download/dz-app/DZ-App.apk';
 var PACCHETTO_ANDROID='com.dz.install.dz_app';
 var INSTALLER='https://script.google.com/macros/s/AKfycbzoZTOCdMxhSilwoApDHsDg_5vImajdkOvf7OdJ0Lt_8eaepzvEn3qb5OblnFV3xXDALg/exec';
 var SERVIZIO='https://script.google.com/macros/s/AKfycbyOMTa6oda0aBSEjd_AEK3Jjrd_IdzFrAlvQZ7BdW2HL7-4Lgb2XV_cphTm89NIqPttXQ/exec';
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
 function chiave(){var m=/[?&]k=([^&#]+)/.exec(location.search),k=m?decodeURIComponent(m[1]):'';k=k.toUpperCase().replace(/[^A-Z0-9]/g,'');return k.length===12?k.slice(0,4)+'-'+k.slice(4,8)+'-'+k.slice(8):'';}
-var K=chiave(),M=document.getElementById('main'),android=/android/i.test(navigator.userAgent);
+var OS=(/[?&]os=(ios|android)/i.exec(location.search)||[])[1]||'',UA=navigator.userAgent;
+var K=chiave(),M=document.getElementById('main'),ios=OS?OS.toLowerCase()==='ios':/iphone|ipad|ipod/i.test(UA)||(/macintosh/i.test(UA)&&navigator.maxTouchPoints>1),android=!ios&&(OS?true:/android/i.test(UA));
 var c=el('div','card');
 if(!K){
 c.appendChild(el('b','','Link senza chiave'));
 c.appendChild(el('div','nota err','Questo link non contiene una chiave valida. Chiedi il link giusto a chi te lo ha mandato.'));
 var s0=el('a','bt sec','SCARICA DZ App');s0.href=APK;c.appendChild(s0);
+}else if(ios){
+c.appendChild(el('b','','La tua chiave · iPhone'));
+c.appendChild(el('div','k',K));
+var pi=el('div','passi');
+pi.appendChild(el('p','','Tocca APRI L\'INSTALLAZIONE: si apre qui in Safari, la chiave è già dentro.'));
+pi.appendChild(el('p','','Accedi con il tuo account Google e segui i passi sullo schermo.'));
+pi.appendChild(el('p','','Alla fine apri l\'app e aggiungila alla schermata Home: tasto Condividi, poi Aggiungi alla schermata Home.'));
+c.appendChild(pi);
+var bi=el('a','bt','APRI L\'INSTALLAZIONE');bi.href=INSTALLER+'?k='+encodeURIComponent(K)+'&s='+encodeURIComponent(SERVIZIO);
+c.appendChild(bi);
+c.appendChild(el('div','nota','Su iPhone non serve DZ App: l\'app funziona nel browser.'));
 }else{
 c.appendChild(el('b','','La tua chiave'));
 c.appendChild(el('div','k',K));
