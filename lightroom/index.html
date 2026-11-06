@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#101826">
+<title>DZ AUTO LIGHTROOM · La nostra idea</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{background:radial-gradient(120% 80% at 50% 0%,#24395f 0%,#101826 55%,#0a0f18 100%);color:#eef2f8;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;display:flex;flex-direction:column;min-height:100%;overflow-x:hidden}
+.top{padding:max(16px,env(safe-area-inset-top)) 18px 0;display:flex;align-items:center;gap:10px}
+.logo{font-weight:800;letter-spacing:.08em;font-size:12px;color:#9fb6dd}
+.barra{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden}
+.barra i{display:block;height:100%;width:0;background:linear-gradient(90deg,#f0a64a,#ffd27a);transition:width .5s}
+.num{font-size:12px;color:#9fb6dd;min-width:38px;text-align:right}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:18px}
+.slide{width:100%;max-width:520px;text-align:center;opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s}
+.slide.vis{opacity:1;transform:none}
+.emo{font-size:64px;line-height:1;margin-bottom:14px;filter:drop-shadow(0 6px 18px rgba(240,166,74,.35))}
+.passo{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.1em;color:#101826;background:#ffd27a;border-radius:20px;padding:5px 12px;margin-bottom:12px}
+h1{font-size:28px;line-height:1.15;margin:0 0 14px;font-weight:800}
+.testo{font-size:18px;line-height:1.5;color:#d3dcea;margin:0 auto;max-width:460px}
+ul{list-style:none;padding:0;margin:16px auto 0;max-width:420px;text-align:left}
+li{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:12px 14px;margin:8px 0;font-size:16px;line-height:1.35;display:flex;gap:10px;align-items:flex-start}
+li b{color:#ffd27a;flex:none}
+.sotto{padding:0 18px max(18px,env(safe-area-inset-bottom))}
+.com{display:flex;gap:12px;justify-content:center;align-items:center}
+button,.btn{font:inherit;border:0;cursor:pointer;border-radius:16px;color:#fff;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.tondo{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);font-size:22px}
+.play{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#f0a64a,#e0782f);font-size:28px;box-shadow:0 8px 24px rgba(224,120,47,.45)}
+.nascosto{visibility:hidden}
+.grande{width:100%;max-width:420px;padding:17px 18px;font-size:17px;font-weight:800;background:linear-gradient(135deg,#2f9e6a,#1f7a50);box-shadow:0 8px 24px rgba(31,122,80,.4);margin-top:20px}
+.secondo{width:100%;max-width:420px;padding:13px 18px;font-size:15px;font-weight:700;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);margin-top:10px}
+.avviso{font-size:13px;color:#ffd27a;text-align:center;min-height:18px;margin:10px 0 0}
+.inizio .testo{margin-bottom:6px}
+.piccolo{font-size:13px;color:#9fb6dd;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">DZ AUTO LIGHTROOM</span><span class="barra"><i id="barra"></i></span><span class="num" id="num"></span></div>
+<main><div class="slide" id="slide"></div></main>
+<div class="sotto">
+  <div class="com" id="com">
+    <button class="tondo" id="prima" aria-label="Indietro">⏮</button>
+    <button class="play" id="play" aria-label="Ascolta">▶</button>
+    <button class="tondo" id="dopo" aria-label="Avanti">⏭</button>
+  </div>
+  <p class="avviso" id="avviso"></p>
+</div>
+<script>
+// Questionario 2 (Google Moduli) da compilare alla fine.
+var QUESTIONARIO = 'https://docs.google.com/forms/d/1XFoWLvvTobsaY60vbBJOLYTIo3fCUvpnPZDXOJGXZJs/viewform';
+var VEL = 1.2;
+
+// e: icona, p: etichetta del passo, t: titolo, x: testo a schermo, l: punti, v: testo letto.
+var SLIDE = [
+  {e:'👋', t:'Ciao Luca',
+   x:'In pochi minuti ti raccontiamo la nostra idea per farti risparmiare tempo con Lightroom.',
+   v:'Ciao Luca! In pochi minuti ti raccontiamo la nostra idea per farti risparmiare tempo con Lightroom. Alla fine ti chiediamo di compilare un breve questionario.'},
+  {e:'📸', t:'Il tuo lavoro oggi',
+   l:['Matrimoni ed eventi','Da 200 a 2500 foto per servizio','Fino a 20 servizi al mese'],
+   v:'Dalle tue risposte: fai soprattutto matrimoni ed eventi, da duecento a duemilacinquecento foto per servizio, fino a venti servizi al mese. L\'obiettivo è uno solo: ridurre il tempo di lavoro, mantenendo il tuo stile.'},
+  {e:'💡', t:'L\'idea in una frase',
+   x:'Lightroom resta il tuo programma. Aggiungiamo un plugin gratuito che fa il lavoro ripetitivo. Tu controlli e approvi.',
+   v:'L\'idea in una frase. Lightroom resta il tuo programma. Ci aggiungiamo un plugin gratuito che fa al posto tuo il lavoro ripetitivo. Tu controlli e approvi.'},
+  {e:'📥', p:'PASSO 1', t:'Importi',
+   x:'Importi le foto come sempre. Lightroom applica subito il tuo preset a tutte le foto.',
+   v:'Passo uno: importi le foto come fai sempre. Lightroom applica il tuo preset a tutte le foto, già durante l\'importazione.'},
+  {e:'🎯', p:'PASSO 2', t:'Selezione',
+   l:['Propone le foto migliori','Segnala fuori fuoco, occhi chiusi, esposizione sbagliata','Niente viene cancellato senza la tua conferma'],
+   v:'Passo due: la selezione. La selezione assistita di Lightroom propone le foto migliori e segnala quelle fuori fuoco, con gli occhi chiusi o sbagliate di esposizione. Gli scarti finiscono in una raccolta a parte: niente viene cancellato senza la tua conferma.'},
+  {e:'🎨', p:'PASSO 3', t:'Sviluppo uniforme',
+   x:'Il tuo preset dà lo stile a tutto il servizio. Le maschere automatiche su soggetto, cielo e persone aiutano a tenerlo uniforme.',
+   v:'Passo tre: lo sviluppo. Il tuo preset dà lo stile a tutto il servizio. Le maschere automatiche di Lightroom, su soggetto, cielo e persone, aiutano a tenere le foto uniformi. Tu ritocchi solo dove serve.'},
+  {e:'👀', p:'PASSO 4', t:'Approvi tu',
+   x:'Guardi il servizio e, quando ti va bene, premi Approva.',
+   v:'Passo quattro: approvi tu. Guardi il servizio e, quando ti va bene, premi approva.'},
+  {e:'🚀', p:'PASSO 5', t:'Esporti con un tasto',
+   l:['Ordine di scatto','I nomi dei file che vuoi tu','JPEG alta qualità + versione web','Filigrana dove serve','Tutto nella cartella Google Drive'],
+   v:'Passo cinque: esporti con un tasto. Il plugin mette le foto in ordine di scatto, dà ai file il nome che vuoi tu, crea il JPEG in alta qualità e quello per il web, aggiunge la filigrana dove serve, e salva tutto nella cartella di Google Drive, pronto da consegnare.'},
+  {e:'🎞️', t:'Un consiglio: il RAW',
+   x:'Con RAW + JPEG Lightroom può fare molto di più. La riduzione del rumore con l\'AI funziona solo sui RAW.',
+   v:'Un consiglio. Se scatti in RAW più JPEG, Lightroom può fare molto di più. Per esempio, la riduzione del rumore con l\'intelligenza artificiale funziona solo sui RAW, non sui JPEG.'},
+  {e:'🛟', t:'Una copia di sicurezza',
+   x:'Oggi non hai un backup delle foto. Ti aiutiamo a impostarne uno semplice.',
+   v:'Una cosa importante: oggi non hai una copia di sicurezza delle foto. Ti aiutiamo a impostarne una semplice, perché un servizio perso non si recupera.'},
+  {e:'💶', t:'Quanto costa',
+   x:'Niente: usi il Lightroom che hai già. Il plugin lo prepariamo noi, gratis.',
+   v:'Quanto costa? Niente. Usi il Lightroom che hai già, e il plugin lo prepariamo noi, gratis.'},
+  {e:'🗺️', t:'Come procediamo',
+   l:['1 · Compili il questionario','2 · Ti mandiamo una guida per impostare Lightroom: risparmi tempo da subito','3 · Prepariamo il plugin e lo provi su un servizio vero'],
+   v:'Come procediamo. Primo: compili il questionario. Secondo: ti mandiamo una guida passo passo per impostare Lightroom, e risparmi tempo da subito. Terzo: prepariamo il plugin, e lo provi su un servizio vero.'},
+  {e:'✅', t:'Tocca a te', fine:true,
+   x:'Compila il questionario: bastano pochi minuti. Se l\'idea ti piace, proseguiamo insieme.',
+   v:'Ora tocca a te. Compila il questionario: bastano pochi minuti. Se l\'idea ti piace, proseguiamo insieme. Grazie Luca!'}
+];
+
+var i = -1, parla = false, giro = 0, voce = null, tVoce = null;
+function g(id){ return document.getElementById(id); }
+function el(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+
+function avvisa(m){ g('avviso').textContent = m || ''; }
+
+// Pagina iniziale: serve un tocco per far partire la voce (regola dei telefoni).
+function inizio(){
+  var s = g('slide'); s.innerHTML = ''; s.className = 'slide inizio';
+  s.appendChild(el('div', 'emo', '📷'));
+  s.appendChild(el('h1', '', 'La nostra idea per il tuo Lightroom'));
+  s.appendChild(el('p', 'testo', 'Una presentazione parlata di poco più di 2 minuti. Alza il volume e tocca ▶.'));
+  s.appendChild(el('p', 'piccolo', 'Puoi andare avanti e indietro quando vuoi.'));
+  g('prima').classList.add('nascosto'); g('dopo').classList.remove('nascosto');
+  g('num').textContent = ''; g('barra').style.width = '0';
+  requestAnimationFrame(function(){ s.classList.add('vis'); });
+}
+
+function mostra(){
+  var d = SLIDE[i], s = g('slide');
+  s.className = 'slide'; s.innerHTML = '';
+  s.appendChild(el('div', 'emo', d.e));
+  if (d.p) s.appendChild(el('span', 'passo', d.p));
+  s.appendChild(el('h1', '', d.t));
+  if (d.x) s.appendChild(el('p', 'testo', d.x));
+  if (d.l) {
+    var ul = el('ul');
+    d.l.forEach(function(t){ var li = el('li'); li.appendChild(el('b', '', '✓')); li.appendChild(el('span', '', t)); ul.appendChild(li); });
+    s.appendChild(ul);
+  }
+  if (d.fine) {
+    var a = el('a', 'btn grande', '📝  COMPILA IL QUESTIONARIO');
+    a.href = QUESTIONARIO; a.target = '_blank'; a.rel = 'noopener';
+    a.onclick = function(){ ferma(); };
+    s.appendChild(a);
+    var r = el('button', 'secondo', '↺  Riascolta dall\'inizio');
+    r.onclick = function(){ i = 0; mostra(); avvia(); };
+    s.appendChild(r);
+  }
+  g('num').textContent = (i + 1) + '/' + SLIDE.length;
+  g('barra').style.width = Math.round((i + 1) / SLIDE.length * 100) + '%';
+  g('prima').classList.toggle('nascosto', i <= 0);
+  g('dopo').classList.toggle('nascosto', i >= SLIDE.length - 1);
+  g('play').textContent = parla ? '⏸' : '▶';
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ s.classList.add('vis'); }); });
+}
+
+// Voce: italiana, femminile se il telefono ne ha una; frasi una alla volta.
+function scegliVoce(){
+  if (!window.speechSynthesis) return null;
+  var vs = speechSynthesis.getVoices().filter(function(v){ return /^it/i.test(v.lang); });
+  var pref = ['alice','federica','elsa','paola','silvia','alessia','isabella','google italiano','female','femmin'];
+  for (var k = 0; k < pref.length; k++) {
+    var f = vs.filter(function(v){ return v.name.toLowerCase().indexOf(pref[k]) >= 0; })[0];
+    if (f) return f;
+  }
+  return vs[0] || null;
+}
+if (window.speechSynthesis) { try { speechSynthesis.onvoiceschanged = function(){ voce = scegliVoce(); }; voce = scegliVoce(); } catch (e) {} }
+// App Android di Daniel (DZ App / Viewer): la WebView non ha speechSynthesis, la voce arriva da window.DZ.
+function dzVoce(){ try { return window.DZ && window.DZ.voce ? Number(window.DZ.voce()) : 0; } catch (e) { return 0; } }
+
+function avvia(n){
+  n = Number(n) || 0;
+  if (!window.speechSynthesis) {
+    var d = dzVoce();
+    if (d === 2 && n < 6) { if (!n) avvisa('Preparo la voce...'); setTimeout(function(){ avvia(n + 1); }, 700); return; }
+    if (d !== 1) { avvisa('Questo telefono non legge ad alta voce: leggi le slide e tocca ⏭.'); parla = false; g('play').textContent = '▶'; return; }
+  }
+  avvisa('');
+  parla = true; g('play').textContent = '⏸';
+  leggi();
+}
+
+function ferma(){
+  parla = false; giro++; clearTimeout(tVoce);
+  try { if (window.speechSynthesis) speechSynthesis.cancel(); else if (window.DZ && window.DZ.zitto) window.DZ.zitto(); } catch (e) {}
+  g('play').textContent = '▶';
+}
+
+function leggi(){
+  var mio = ++giro; clearTimeout(tVoce);
+  var testo = SLIDE[i].v, frasi = testo.match(/[^.!?]+[.!?]*/g) || [testo], fatto = false;
+  var fine = function(){
+    if (fatto || mio !== giro) return; fatto = true; clearTimeout(tVoce);
+    if (!parla) return;
+    if (i < SLIDE.length - 1) {
+      tVoce = setTimeout(function(){ if (mio !== giro || !parla) return; i++; mostra(); leggi(); }, Math.round(800 / VEL));
+    } else { parla = false; g('play').textContent = '▶'; }
+  };
+  // riserva se il telefono non avvisa la fine della lettura
+  var riserva = Math.max(4000, Math.round(testo.length * 95 / VEL)) + 1500;
+  if (!window.speechSynthesis) {
+    try { window.DZ.parla(testo, VEL); } catch (e) {}
+    var t0 = Date.now();
+    var guarda = function(){ if (mio !== giro) return; var st = 2; try { st = Number(window.DZ.voceStato()); } catch (e) {} if (st !== 1 || Date.now() - t0 > riserva + 4000) { fine(); return; } tVoce = setTimeout(guarda, 300); };
+    tVoce = setTimeout(guarda, 400);
+    return;
+  }
+  try { speechSynthesis.cancel(); } catch (e) {}
+  if (!voce) voce = scegliVoce();
+  frasi.forEach(function(f, j){
+    var u = new SpeechSynthesisUtterance(f.trim());
+    u.lang = 'it-IT'; if (voce) u.voice = voce; u.rate = VEL; u.pitch = 1.05;
+    if (j === frasi.length - 1) { u.onend = fine; u.onerror = function(){}; }
+    speechSynthesis.speak(u);
+  });
+  tVoce = setTimeout(fine, riserva);
+}
+
+g('play').onclick = function(){
+  if (parla) { ferma(); return; }
+  if (i < 0) { i = 0; mostra(); }
+  avvia();
+};
+g('dopo').onclick = function(){
+  var on = parla; ferma();
+  if (i < SLIDE.length - 1) { i++; mostra(); if (on || i === 0) avvia(); }
+};
+g('prima').onclick = function(){
+  var on = parla; ferma();
+  if (i > 0) { i--; mostra(); if (on) avvia(); }
+};
+document.addEventListener('visibilitychange', function(){ if (document.hidden && parla) ferma(); });
+inizio();
+</script>
+</body>
+</html>
