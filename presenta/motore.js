@@ -1,5 +1,5 @@
 /* Presentazioni parlate DZ: motore comune.
-   La pagina definisce window.PRES = { id, marchio, vel, tono, etichette:{tu,ai}, inizio:{t,x,chat,firma}, slide:[...], wa }
+   La pagina definisce window.PRES = { id, marchio, vel, tono, audio:{src,t:[inizio di ogni slide in secondi]}, etichette:{tu,ai}, inizio:{t,x,chat,firma}, slide:[...], wa }
    Slide: t titolo, x testo, l punti, n passi numerati, chat [{da:'tu'|'ai', t}], chiave true, fine true, link {t,href}, v testo letto.
    {NOME} nel testo = ", Nome" se l'indirizzo ha ?nome=Nome. ?tel=39... aggiunge WhatsApp alla fine. */
 (function () {
@@ -15,6 +15,8 @@
   var VEL = Number(conf.vel) || P.vel || 1.2;
   var TONO = Number(conf.tono) || P.tono || 0.85;
   var ET = P.etichette || { tu: 'Tu', ai: 'Claude' };
+  // Voce registrata (P.audio): un solo file mp3, la slide cambia ai tempi di P.audio.t; velocita originale.
+  var AU = P.audio && P.audio.src && P.audio.t && P.audio.t.length === S.length ? P.audio : null, au = null, auKo = false;
   var i = -1, parla = false, giro = 0, voce = null, tVoce = null, tFrase = null, video = false, tConto = null, blocco = null, tEsci = null, tVideo = 0;
 
   function g(id) { return document.getElementById(id); }
@@ -149,8 +151,45 @@
     } catch (e) {}
   }
 
+  function registrata() { return !!AU && !auKo && conf.tipo !== 'tel'; }
+  function lettore() {
+    if (au) return au;
+    au = new Audio(); au.preload = 'auto'; au.src = AU.src;
+    au.addEventListener('timeupdate', function () {
+      if (!parla || !registrata()) return;
+      var n = i;
+      while (n < S.length - 1 && au.currentTime >= AU.t[n + 1] - 0.05) n++;
+      if (n !== i) { i = n; mostra(); }
+    });
+    au.addEventListener('ended', function () { if (parla && registrata()) { parla = false; tastoPlay(); sveglia(false); } });
+    au.addEventListener('error', function () { if (registrata()) riserva('errore'); });
+    return au;
+  }
+  // Se la voce registrata non parte: voce del telefono.
+  function riserva(perche) {
+    var on = parla; auKo = true;
+    try { if (au) au.pause(); } catch (e) {}
+    avvisa('Voce registrata non disponibile: uso la voce del telefono.');
+    if (on) { parla = false; avvia(); }
+  }
+  function avviaRegistrata() {
+    var a = lettore(), mio = ++giro;
+    avvisa('');
+    parla = true; tastoPlay(); sveglia(true);
+    // riprende dal punto di pausa se e nella slide mostrata, altrimenti dall'inizio della slide
+    try {
+      var k = Math.max(0, i), da = AU.t[k], a2 = k < S.length - 1 ? AU.t[k + 1] : 1e9, pos = a.currentTime;
+      a.playbackRate = 1;
+      if (a.ended || !(pos >= da && pos < a2 - 0.3)) a.currentTime = da;
+    } catch (e) {}
+    var pr;
+    try { pr = a.play(); } catch (e) { riserva('play'); return; }
+    if (pr && pr.catch) pr.catch(function (e) { if (mio === giro && parla && (!e || e.name !== 'AbortError')) riserva('play'); });
+  }
+
   function avvia(n) {
     n = Number(n) || 0;
+    if (registrata()) { avviaRegistrata(); return; }
     if (!window.speechSynthesis) {
       var d = dzVoce();
       if (d === 2 && n < 6) { if (!n) avvisa('Preparo la voce...'); setTimeout(function () { avvia(n + 1); }, 700); return; }
@@ -163,6 +202,7 @@
 
   function ferma() {
     parla = false; giro++; clearTimeout(tVoce); clearTimeout(tFrase);
+    try { if (au) au.pause(); } catch (e) {}
     try { if (window.speechSynthesis) speechSynthesis.cancel(); else if (window.DZ && window.DZ.zitto) window.DZ.zitto(); } catch (e) {}
     tastoPlay(); sveglia(false);
   }
@@ -229,6 +269,14 @@
   function foglioVoce() {
     var f = g('fVoce'); f.innerHTML = '';
     f.appendChild(el('h2', '', 'Voce e video'));
+    if (AU) {
+      f.appendChild(el('label', '', 'Quale voce'));
+      var st = el('select');
+      [['reg', 'Voce registrata'], ['tel', 'Voce del telefono']].forEach(function (x) { var o = el('option', '', x[1]); o.value = x[0]; if ((conf.tipo === 'tel' ? 'tel' : 'reg') === x[0]) o.selected = true; st.appendChild(o); });
+      st.onchange = function () { ferma(); conf.tipo = st.value === 'tel' ? 'tel' : ''; auKo = false; salva(); foglioVoce(); };
+      f.appendChild(st);
+      if (registrata()) f.appendChild(el('p', 'piccolo', 'Voce registrata alla sua velocità originale. Velocità e tono qui sotto valgono per la voce del telefono.'));
+    }
     var vs = voci();
     if (vs.length) {
       f.appendChild(el('label', '', 'Voce'));
@@ -254,6 +302,12 @@
     var prova = el('button', 'btn', 'Prova la voce');
     prova.onclick = function () {
       ferma();
+      if (registrata()) {
+        var a = lettore(), mio = giro;
+        try { a.currentTime = AU.t[0]; var pr = a.play(); if (pr && pr.catch) pr.catch(function () { riserva('prova'); }); } catch (e) { riserva('prova'); }
+        setTimeout(function () { if (mio === giro && !parla) { try { a.pause(); } catch (e) {} } }, 4000);
+        return;
+      }
       try {
         if (window.speechSynthesis) { var u = new SpeechSynthesisUtterance('Ciao! Questa è la voce della presentazione.'); u.lang = 'it-IT'; if (voce) u.voice = voce; u.rate = VEL; u.pitch = TONO; speechSynthesis.speak(u); }
         else if (window.DZ && window.DZ.parla) { dzTono(); window.DZ.parla('Ciao! Questa è la voce della presentazione.', VEL); }
@@ -274,21 +328,22 @@
     var c = el('button', 'btn', 'Chiudi'); c.onclick = chiudi; az2.appendChild(c);
     f.appendChild(az2);
   }
-  function salva() { try { localStorage.setItem('dz-pres-voce2', JSON.stringify({ voce: conf.voce || '', vel: VEL, tono: TONO })); } catch (e) {} }
+  function salva() { try { localStorage.setItem('dz-pres-voce2', JSON.stringify({ voce: conf.voce || '', vel: VEL, tono: TONO, tipo: conf.tipo || '' })); } catch (e) {} }
 
   function testoTutto() {
-    return S.map(function (d, k) { return (k + 1) + '. ' + nm(d.t) + '\n' + nm(d.v); }).join('\n\n');
+    // Solo il parlato: niente numeri e titoli (una riga vuota tra le slide).
+    return S.map(function (d) { return nm(d.v); }).join('\n\n');
   }
   function foglioTesto() {
     var f = g('fTesto'); f.innerHTML = '';
     f.appendChild(el('h2', '', 'Il testo letto'));
-    f.appendChild(el('p', 'piccolo', 'Copialo per registrarlo con un\'altra voce o con la tua.'));
+    f.appendChild(el('p', 'piccolo', 'Solo il parlato, una riga vuota tra le slide. Copialo per registrarlo con un\'altra voce o con la tua.'));
     var az = el('div', 'azioni');
     var cp = el('button', 'btn pieno', 'Copia tutto il testo');
     cp.onclick = function () { copia(testoTutto(), cp); };
     az.appendChild(cp);
     f.appendChild(az);
-    S.forEach(function (d, k) { f.appendChild(el('h3', '', (k + 1) + '. ' + nm(d.t))); f.appendChild(el('p', '', nm(d.v))); });
+    S.forEach(function (d) { f.appendChild(el('p', '', nm(d.v))); });
     var az2 = el('div', 'azioni'); var c = el('button', 'btn', 'Chiudi'); c.onclick = chiudi; az2.appendChild(c); f.appendChild(az2);
   }
   function copia(t, b) {
@@ -306,6 +361,9 @@
     chiudi(); ferma();
     // la voce si sblocca con il tocco, prima del conto alla rovescia
     try { if (window.speechSynthesis) { var u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } } catch (e) {}
+    if (registrata()) {
+      try { var a = lettore(); a.muted = true; var pr = a.play(); var su = function () { try { a.pause(); } catch (e) {} a.muted = false; }; if (pr && pr.then) pr.then(su, su); else su(); } catch (e) {}
+    }
     video = true; tVideo = Date.now(); document.body.classList.add('video');
     try { var r = document.documentElement, fs = r.requestFullscreen || r.webkitRequestFullscreen; if (fs) { var p = fs.call(r); if (p && p.catch) p.catch(function () {}); } } catch (e) {}
     sveglia(true);
