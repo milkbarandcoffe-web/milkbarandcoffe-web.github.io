@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#10302C">
+<title>Un'app su misura per te</title>
+<meta name="description" content="Presentazione parlata: come nasce un'app fatta solo per il tuo lavoro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../presenta/stile.css">
+</head>
+<body>
+<noscript>Per ascoltare la presentazione serve JavaScript attivo.</noscript>
+<script>
+// Presentazione per i clienti. Link personalizzato: ?nome=Mario&tel=39333... (WhatsApp alla fine).
+window.PRES = {
+  id: 'su-misura',
+  marchio: 'Daniel Zavan',
+  vel: 1.1,
+  pronuncia: [['Claude', 'Clod']],
+  etichette: { tu: 'Tu', ai: 'Claude' },
+  wa: 'Ciao Daniel, ho visto la presentazione. Parliamo della mia app?',
+  inizio: {
+    t: 'Un\'app su misura per il tuo lavoro',
+    x: 'Presentazione parlata, circa 3 minuti. Alza il volume e tocca play.',
+    chat: [
+      { da: 'tu', t: 'Mi servirebbe un modo semplice per segnare le prenotazioni.' },
+      { da: 'ai', t: 'Ecco una prima versione. Provala sul telefono.' }
+    ],
+    firma: 'Un progetto di Daniel Zavan'
+  },
+  slide: [
+    { t: 'Ciao{NOME}!',
+      x: 'In tre minuti ti raccontiamo come un\'app fatta solo per te può semplificarti il lavoro.',
+      v: 'Ciao{NOME}! In tre minuti ti raccontiamo come un\'app fatta solo per te può semplificarti il lavoro. Non un programma qualsiasi: la tua app.' },
+
+    { t: 'Il tuo lavoro lo sai fare. È il resto che ti ruba tempo.',
+      l: ['Clienti segnati su quaderni e fogli sparsi', 'Le stesse cose scritte due o tre volte', 'Programmi pensati per tutti, quindi per nessuno'],
+      v: 'Il tuo lavoro lo sai fare benissimo. È tutto il resto che ti ruba tempo. Clienti segnati sul quaderno, messaggi sparsi, le stesse cose scritte due o tre volte. E i programmi che trovi in giro sono pensati per tutti, quindi non vanno bene davvero per nessuno.' },
+
+    { t: 'Un\'app che fa esattamente quello che serve a te.',
+      x: 'Con i tuoi nomi, i tuoi passaggi, il tuo modo di lavorare. Niente menu inutili, niente da imparare.',
+      v: 'L\'idea è semplice: un\'app che fa esattamente quello che serve a te. Con i tuoi nomi, i tuoi passaggi, il tuo modo di lavorare. Niente menu inutili, niente da imparare.' },
+
+    { t: 'Daniel viene da te, con il telefono.',
+      x: 'Tu racconti. Claude costruisce. Daniel controlla.',
+      chat: [
+        { da: 'tu', t: 'Quando un cliente prenota, vorrei mandargli un WhatsApp già scritto.' },
+        { da: 'ai', t: 'Fatto: scegli il cliente e il messaggio parte con un tocco.' }
+      ],
+      v: 'Come nasce la tua app? Daniel viene da te, con il suo telefono. Gli racconti come lavori, con parole tue. Lui lo spiega a Claude, l\'intelligenza artificiale con cui lavora, e l\'app prende forma mentre parlate. Tu racconti, Claude costruisce, Daniel controlla che tutto funzioni.' },
+
+    { t: 'La prima versione la provi in pochissimo tempo.',
+      x: 'Spesso già il giorno stesso. Se qualcosa non ti convince, lo dici e si cambia: si va avanti a piccoli passi, sempre con l\'app in mano.',
+      v: 'La prima versione la provi in pochissimo tempo, spesso già il giorno stesso, direttamente sul tuo telefono. Se qualcosa non ti convince, lo dici e si cambia. Si va avanti a piccoli passi, sempre con l\'app in mano, non con un progetto su carta.' },
+
+    { t: 'Qualche lavoro vero.',
+      l: ['Un orto: clienti, cassette del giorno, prenotazioni e WhatsApp con un tocco', 'Turni e ore lavorate, con i promemoria via mail', 'Un fotografo: stiamo automatizzando il suo lavoro in Lightroom'],
+      v: 'Qualche esempio di lavori veri. Per un orto: clienti, cassette del giorno, prenotazioni, e il messaggio WhatsApp al cliente con un tocco. Un calendario di turni e ore lavorate, con i promemoria via mail. E per un fotografo stiamo automatizzando il lavoro di tutti i giorni in Lightroom.' },
+
+    { t: 'I tuoi dati restano tuoi.',
+      l: ['L\'app vive nel tuo account Google', 'Clienti, fogli e documenti nel tuo Google Drive', 'Funziona su Android e su iPhone'],
+      v: 'Una cosa importante: i tuoi dati restano tuoi. L\'app viene installata nel tuo account Google. Clienti, fogli e documenti stanno nel tuo Google Drive, non sui computer di qualcun altro. E funziona sia su Android che su iPhone.' },
+
+    { t: 'Si usa con una chiave.', chiave: true,
+      x: 'Come un abbonamento: scegli tu per quanto tempo, da un mese a un anno. Paghi solo il periodo che ti serve.',
+      v: 'Come funziona il pagamento? Con una chiave. È come un abbonamento: scegli tu per quanto tempo, da un mese a un anno. Paghi solo il periodo che ti serve, senza vincoli e senza sorprese.' },
+
+    { t: 'Alla scadenza, decidi tu.',
+      l: ['Rinnovi e continui come prima', 'Ti fermi: l\'app si toglie, i tuoi dati restano nel tuo Drive', 'Oppure l\'app diventa tua per sempre'],
+      v: 'E alla scadenza? Decidi tu. Rinnovi, e continui come prima. Oppure ti fermi: l\'app si toglie, ma i tuoi dati restano nel tuo Google Drive. E se vuoi, l\'app può diventare tua per sempre, con una licenza definitiva.' },
+
+    { t: 'Non resti mai solo.',
+      x: 'Ti serve una modifica o una funzione nuova? Lo dici a Daniel e la sistemate insieme. Se vuoi, nell\'app mettiamo anche una guida a voce, come questa.',
+      v: 'E non resti mai solo. Ti serve una modifica, o una funzione nuova? Lo dici a Daniel, e la sistemate insieme. E se vuoi, nell\'app mettiamo anche una guida a voce, come questa, che spiega tutto passo per passo.' },
+
+    { t: 'Perché noi.',
+      l: ['Su misura, non un programma qualsiasi', 'Veloce: si parte da quello che ti serve oggi', 'Semplice, anche per chi con la tecnologia non va d\'accordo', 'Vicini: ci si vede di persona, niente call center'],
+      v: 'Quindi, perché noi? Perché la tua app è su misura, non un programma qualsiasi. Perché è veloce: si parte da quello che ti serve oggi. Perché è semplice, anche per chi con la tecnologia non va d\'accordo. E perché siamo vicini: ci si vede di persona, non parli con un call center.' },
+
+    { t: 'Raccontaci cosa ti serve.', fine: true,
+      x: 'Il primo incontro è senza impegno: un caffè, e vediamo insieme cosa possiamo semplificarti.',
+      v: 'Allora, raccontaci cosa ti serve. Il primo incontro è senza impegno: un caffè, e vediamo insieme cosa possiamo semplificarti. Ciao, e a presto!' }
+  ]
+};
+</script>
+<script src="../presenta/motore.js"></script>
+</body>
+</html>

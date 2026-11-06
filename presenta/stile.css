@@ -1,0 +1,127 @@
+/* Presentazioni parlate DZ: stile comune. Colori della pagina in :root (fondo, carta, tenue, accento). */
+:root{
+  --fondo:#10302C;--fondo2:#173F3A;--carta:#EAF1EC;--tenue:#9CB9AF;
+  --accento:#E9B44C;--su-accento:#1C1606;--linea:rgba(234,241,236,.16);
+  --titoli:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --testi:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{
+  background:var(--fondo);
+  background-image:radial-gradient(90% 60% at 100% 0%,var(--fondo2) 0%,transparent 70%);
+  color:var(--carta);font-family:var(--testi);
+  display:flex;flex-direction:column;min-height:100%;overflow-x:hidden;
+}
+button,a{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accento);outline-offset:3px}
+
+/* Testa: firma e avanzamento */
+.testa{padding:max(14px,env(safe-area-inset-top)) 20px 0}
+.riga{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:14px;color:var(--tenue)}
+.firma{font-family:var(--titoli);font-weight:700;color:var(--carta);letter-spacing:.01em}
+.barra{height:3px;border-radius:3px;background:var(--linea);margin-top:10px;overflow:hidden}
+.barra i{display:block;height:100%;width:0;background:var(--accento);transition:width .5s}
+
+/* Slide */
+main{flex:1;display:flex;align-items:center;padding:20px 22px}
+.slide{width:100%;max-width:560px;margin:0 auto;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
+.slide.vis{opacity:1;transform:none}
+h1{
+  font-family:var(--titoli);font-weight:800;font-size:clamp(34px,10vw,52px);
+  line-height:1.02;letter-spacing:-.025em;margin:0 0 18px;text-wrap:balance;
+}
+.inizio h1{font-size:clamp(40px,12vw,64px)}
+.testo{font-size:19px;line-height:1.5;margin:0;max-width:34ch;color:var(--carta);opacity:.9}
+.piccolo{font-size:15px;line-height:1.45;color:var(--tenue);margin:14px 0 0;max-width:36ch}
+
+/* Elenchi: segno di spunta; numerati solo per le sequenze */
+ul,ol{list-style:none;padding:0;margin:18px 0 0;max-width:40ch}
+li{position:relative;padding:11px 0 11px 34px;font-size:18px;line-height:1.38;border-top:1px solid var(--linea)}
+li:last-child{border-bottom:1px solid var(--linea)}
+ul li::before{
+  content:"";position:absolute;left:4px;top:17px;width:14px;height:8px;
+  border-left:3px solid var(--accento);border-bottom:3px solid var(--accento);transform:rotate(-45deg);
+}
+ol{counter-reset:n}
+ol li{counter-increment:n}
+ol li::before{
+  content:counter(n);position:absolute;left:0;top:10px;width:24px;height:24px;border-radius:50%;
+  background:var(--accento);color:var(--su-accento);font-weight:700;font-size:14px;line-height:24px;text-align:center;
+}
+
+/* Chat: la scena di chi racconta e di Claude che costruisce */
+.chat{display:flex;flex-direction:column;gap:10px;margin:20px 0 0;max-width:420px}
+.msg{max-width:86%;padding:11px 14px;font-size:17px;line-height:1.4}
+.msg small{display:block;font-size:12px;opacity:.7;margin-bottom:3px}
+.msg.tu{align-self:flex-end;background:var(--carta);color:var(--fondo);border-radius:18px 18px 4px 18px}
+.msg.ai{align-self:flex-start;border:2px solid var(--accento);border-radius:18px 18px 18px 4px}
+.scrive{align-self:flex-start;display:flex;gap:5px;padding:14px 16px;border:2px solid var(--accento);border-radius:18px 18px 18px 4px}
+.scrive i{width:7px;height:7px;border-radius:50%;background:var(--accento);animation:punto 1s infinite}
+.scrive i:nth-child(2){animation-delay:.15s}.scrive i:nth-child(3){animation-delay:.3s}
+@keyframes punto{0%,60%,100%{opacity:.3}30%{opacity:1}}
+/* Copertina: i messaggi arrivano uno dopo l'altro (unico momento animato) */
+.inizio .msg,.inizio .scrive{opacity:0;animation:entra .5s forwards}
+.inizio .msg.tu{animation-delay:.5s}
+.inizio .scrive{animation:entra .3s 1.3s forwards,via .2s 2.6s forwards}
+.inizio .msg.ai{animation-delay:2.8s}
+@keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes via{to{opacity:0;height:0;padding:0;margin:-5px 0;border-width:0}}
+
+/* La chiave */
+.chiave{display:block;width:150px;height:auto;color:var(--accento);margin:0 0 16px;transform-origin:22% 50%}
+.vis .chiave{animation:gira .9s cubic-bezier(.2,.8,.2,1)}
+@keyframes gira{from{transform:rotate(-35deg) translateX(-10px);opacity:0}to{transform:none;opacity:1}}
+
+/* Pulsanti */
+.azioni{display:flex;flex-direction:column;gap:10px;margin-top:24px;max-width:420px}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border-radius:14px;
+  padding:16px 18px;font-size:17px;font-weight:700;border:2px solid var(--accento);background:transparent;color:var(--carta);
+}
+.btn.pieno{background:var(--accento);color:var(--su-accento)}
+.sotto{padding:0 20px max(16px,env(safe-area-inset-bottom))}
+.com{display:flex;gap:16px;justify-content:center;align-items:center}
+.tondo{width:54px;height:54px;border-radius:50%;border:2px solid var(--accento);background:transparent;display:grid;place-items:center}
+.play{width:74px;height:74px;border-radius:50%;border:0;background:var(--accento);color:var(--su-accento);display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.tondo svg,.play svg{width:24px;height:24px;fill:currentColor}
+.play svg{width:30px;height:30px}
+.nascosto{visibility:hidden}
+.strumenti{display:flex;gap:8px;justify-content:center;margin-top:14px}
+.strumenti button{border:1.5px solid var(--accento);background:transparent;border-radius:20px;padding:7px 14px;font-size:14px;color:var(--accento)}
+.avviso{font-size:14px;color:var(--accento);text-align:center;min-height:18px;margin:10px 0 0}
+
+/* Fogli in basso: voce, testo */
+.velo{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:5}
+.foglio{
+  position:fixed;left:0;right:0;bottom:0;z-index:6;max-height:82vh;overflow:auto;display:none;
+  background:var(--fondo2);border-radius:22px 22px 0 0;padding:20px 20px max(20px,env(safe-area-inset-bottom));
+  box-shadow:0 -10px 40px rgba(0,0,0,.4);
+}
+.aperto .velo{display:block}
+.foglio.su{display:block}
+.foglio h2{font-family:var(--titoli);font-size:24px;margin:0 0 12px}
+.foglio h3{font-family:var(--titoli);font-size:17px;margin:18px 0 4px}
+.foglio p{font-size:16px;line-height:1.5;margin:0 0 8px}
+.foglio label{display:block;font-size:15px;color:var(--tenue);margin:14px 0 6px}
+.foglio select{width:100%;font:inherit;font-size:16px;padding:12px;border-radius:12px;border:2px solid var(--accento);background:var(--fondo);color:var(--carta)}
+.foglio input[type=range]{width:100%;accent-color:var(--accento)}
+.foglio .azioni{margin-top:16px;max-width:none}
+.foglio ol li{font-size:16px}
+
+/* Modalita video: solo le slide */
+.conto{position:fixed;inset:0;display:none;place-items:center;font-family:var(--titoli);font-size:120px;font-weight:800;color:var(--accento);background:var(--fondo);z-index:8}
+.conto.vis{display:grid}
+.video .sotto,.video .slide .azioni{display:none}
+.video main{padding-bottom:40px}
+.esci{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9;display:none}
+.esci.vis{display:flex}
+
+@media (min-width:700px){main{padding:30px}h1{font-size:56px}}
+@media (prefers-reduced-motion:reduce){
+  .slide{transition:none;transform:none}
+  .inizio .msg,.inizio .scrive{animation:none;opacity:1}
+  .inizio .scrive{display:none}
+  .vis .chiave,.scrive i{animation:none}
+}
