@@ -53,6 +53,7 @@ button,.btn{font:inherit;border:0;cursor:pointer;border-radius:16px;color:#fff;t
 // Questionario 2 (Google Moduli) da compilare alla fine.
 var QUESTIONARIO = 'https://docs.google.com/forms/d/1XFoWLvvTobsaY60vbBJOLYTIo3fCUvpnPZDXOJGXZJs/viewform';
 var VEL = 1.2;
+var TONO = 0.85; // voce piu grave (6/11/2026)
 
 // e: icona, p: etichetta del passo, t: titolo, x: testo a schermo, l: punti, v: testo letto.
 var SLIDE = [
@@ -149,11 +150,16 @@ function scegliVoce(){
   if (!window.speechSynthesis) return null;
   var vs = speechSynthesis.getVoices().filter(function(v){ return /^it/i.test(v.lang); });
   var pref = ['alice','federica','elsa','paola','silvia','alessia','isabella','google italiano','female','femmin'];
-  for (var k = 0; k < pref.length; k++) {
-    var f = vs.filter(function(v){ return v.name.toLowerCase().indexOf(pref[k]) >= 0; })[0];
-    if (f) return f;
-  }
-  return vs[0] || null;
+  // prima le voci di qualita alta (Natural, Neural, Premium, Enhanced, Online), poi l'elenco preferito
+  var best = vs[0] || null, bp = -1;
+  vs.forEach(function(v){
+    var n = v.name.toLowerCase(), p = 0;
+    if (/natural|neural|premium|enhanced|migliorat|online/.test(n)) p += 100;
+    if (v.localService === false) p += 10;
+    for (var k = 0; k < pref.length; k++) if (n.indexOf(pref[k]) >= 0) { p += (pref.length - k) * 2; break; }
+    if (p > bp) { bp = p; best = v; }
+  });
+  return best;
 }
 if (window.speechSynthesis) { try { speechSynthesis.onvoiceschanged = function(){ voce = scegliVoce(); }; voce = scegliVoce(); } catch (e) {} }
 // App Android di Daniel (DZ App / Viewer): la WebView non ha speechSynthesis, la voce arriva da window.DZ.
@@ -190,6 +196,7 @@ function leggi(){
   // riserva se il telefono non avvisa la fine della lettura
   var riserva = Math.max(4000, Math.round(testo.length * 95 / VEL)) + 1500;
   if (!window.speechSynthesis) {
+    try { if (window.DZ.tono) window.DZ.tono(TONO); } catch (e) {}
     try { window.DZ.parla(testo, VEL); } catch (e) {}
     var t0 = Date.now();
     var guarda = function(){ if (mio !== giro) return; var st = 2; try { st = Number(window.DZ.voceStato()); } catch (e) {} if (st !== 1 || Date.now() - t0 > riserva + 4000) { fine(); return; } tVoce = setTimeout(guarda, 300); };
@@ -200,7 +207,7 @@ function leggi(){
   if (!voce) voce = scegliVoce();
   frasi.forEach(function(f, j){
     var u = new SpeechSynthesisUtterance(f.trim());
-    u.lang = 'it-IT'; if (voce) u.voice = voce; u.rate = VEL; u.pitch = 1.05;
+    u.lang = 'it-IT'; if (voce) u.voice = voce; u.rate = VEL; u.pitch = TONO;
     if (j === frasi.length - 1) { u.onend = fine; u.onerror = function(){}; }
     speechSynthesis.speak(u);
   });

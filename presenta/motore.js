@@ -1,5 +1,5 @@
 /* Presentazioni parlate DZ: motore comune.
-   La pagina definisce window.PRES = { id, marchio, vel, etichette:{tu,ai}, inizio:{t,x,chat,firma}, slide:[...], wa }
+   La pagina definisce window.PRES = { id, marchio, vel, tono, etichette:{tu,ai}, inizio:{t,x,chat,firma}, slide:[...], wa }
    Slide: t titolo, x testo, l punti, n passi numerati, chat [{da:'tu'|'ai', t}], chiave true, fine true, link {t,href}, v testo letto.
    {NOME} nel testo = ", Nome" se l'indirizzo ha ?nome=Nome. ?tel=39... aggiunge WhatsApp alla fine. */
 (function () {
@@ -10,10 +10,12 @@
   var NOME = (q.get('nome') || '').trim().slice(0, 30);
   var TEL = (q.get('tel') || '').replace(/\D/g, '').slice(0, 15);
   var conf = {};
-  try { conf = JSON.parse(localStorage.getItem('dz-pres-voce') || '{}') || {}; } catch (e) { conf = {}; }
-  var VEL = Number(conf.vel) || P.vel || 1.1;
+  // dz-pres-voce2: valori nuovi (6/11/2026: voce piu grave, velocita 1,2) anche per chi aveva gia scelto.
+  try { conf = JSON.parse(localStorage.getItem('dz-pres-voce2') || '{}') || {}; } catch (e) { conf = {}; }
+  var VEL = Number(conf.vel) || P.vel || 1.2;
+  var TONO = Number(conf.tono) || P.tono || 0.85;
   var ET = P.etichette || { tu: 'Tu', ai: 'Claude' };
-  var i = -1, parla = false, giro = 0, voce = null, tVoce = null, video = false, tConto = null, blocco = null, tEsci = null, tVideo = 0;
+  var i = -1, parla = false, giro = 0, voce = null, tVoce = null, tFrase = null, video = false, tConto = null, blocco = null, tEsci = null, tVideo = 0;
 
   function g(id) { return document.getElementById(id); }
   function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
@@ -117,16 +119,22 @@
     if (!window.speechSynthesis) return [];
     try { return speechSynthesis.getVoices().filter(function (v) { return /^it/i.test(v.lang); }); } catch (e) { return []; }
   }
+  // Voce piu naturale: prima le voci di qualita alta (Natural, Neural, Premium, Enhanced, Online), poi l'elenco preferito.
+  function punti(v) {
+    var n = v.name.toLowerCase(), p = 0;
+    if (/natural|neural|premium|enhanced|migliorat|online/.test(n)) p += 100;
+    if (v.localService === false) p += 10;
+    var pref = P.voci || ['alice', 'federica', 'google italiano', 'elsa', 'isabella', 'luca', 'paola'];
+    for (var k = 0; k < pref.length; k++) if (n.indexOf(pref[k]) >= 0) { p += (pref.length - k) * 2; break; }
+    return p;
+  }
   function scegliVoce() {
     var vs = voci();
     if (!vs.length) return null;
     if (conf.voce) { var f0 = vs.filter(function (v) { return v.name === conf.voce; })[0]; if (f0) return f0; }
-    var pref = P.voci || ['alice', 'federica', 'google italiano', 'luca', 'paola', 'elsa'];
-    for (var k = 0; k < pref.length; k++) {
-      var f = vs.filter(function (v) { return v.name.toLowerCase().indexOf(pref[k]) >= 0; })[0];
-      if (f) return f;
-    }
-    return vs[0];
+    var best = vs[0], bp = -1;
+    vs.forEach(function (v) { var p = punti(v); if (p > bp) { bp = p; best = v; } });
+    return best;
   }
   if (window.speechSynthesis) {
     try { speechSynthesis.onvoiceschanged = function () { voce = scegliVoce(); if (g('fVoce').classList.contains('su')) foglioVoce(); }; voce = scegliVoce(); } catch (e) {}
@@ -154,7 +162,7 @@
   }
 
   function ferma() {
-    parla = false; giro++; clearTimeout(tVoce);
+    parla = false; giro++; clearTimeout(tVoce); clearTimeout(tFrase);
     try { if (window.speechSynthesis) speechSynthesis.cancel(); else if (window.DZ && window.DZ.zitto) window.DZ.zitto(); } catch (e) {}
     tastoPlay(); sveglia(false);
   }
@@ -163,8 +171,10 @@
   // Pronuncia per la voce del telefono (solo per la lettura, il testo mostrato non cambia).
   function pron(t) { (P.pronuncia || []).forEach(function (c) { t = t.split(c[0]).join(c[1]); }); return t; }
 
+  function dzTono() { try { if (window.DZ && window.DZ.tono) window.DZ.tono(TONO); } catch (e) {} }
+
   function leggi() {
-    var mio = ++giro; clearTimeout(tVoce);
+    var mio = ++giro; clearTimeout(tVoce); clearTimeout(tFrase);
     var testo = pron(nm(S[i].v)), fatto = false;
     var fine = function () {
       if (fatto || mio !== giro) return; fatto = true; clearTimeout(tVoce);
@@ -176,6 +186,7 @@
     // riserva se il telefono non avvisa la fine della lettura
     var riserva = Math.max(4000, Math.round(testo.length * 95 / VEL)) + 1500;
     if (!window.speechSynthesis) {
+      dzTono();
       try { window.DZ.parla(testo, VEL); } catch (e) {}
       var t0 = Date.now();
       var guarda = function () {
@@ -189,14 +200,25 @@
     }
     try { speechSynthesis.cancel(); } catch (e) {}
     if (!voce) voce = scegliVoce();
-    var fs = frasi(testo);
-    fs.forEach(function (f, j) {
-      var u = new SpeechSynthesisUtterance(f.trim());
-      u.lang = 'it-IT'; if (voce) u.voice = voce; u.rate = VEL; u.pitch = 1;
-      if (j === fs.length - 1) { u.onend = fine; u.onerror = function () {}; }
+    // Una frase alla volta, con una piccola pausa tra le frasi: lettura piu calma e naturale.
+    var fs = frasi(testo), j = 0;
+    var prossima = function () {
+      if (mio !== giro) return;
+      if (j >= fs.length) { fine(); return; }
+      var f = fs[j++].trim();
+      if (!f) { prossima(); return; }
+      var u = new SpeechSynthesisUtterance(f), fatta = false;
+      u.lang = 'it-IT'; if (voce) u.voice = voce; u.rate = VEL; u.pitch = TONO;
+      var dopo = function () {
+        if (fatta || mio !== giro) return; fatta = true; clearTimeout(tFrase);
+        tFrase = setTimeout(prossima, Math.round(260 / VEL));
+      };
+      u.onend = dopo; u.onerror = dopo;
+      // riserva per la frase se il telefono non avvisa la fine
+      tFrase = setTimeout(dopo, Math.max(2500, Math.round(f.length * 95 / VEL)) + 1500);
       speechSynthesis.speak(u);
-    });
-    tVoce = setTimeout(fine, riserva);
+    };
+    prossima();
   }
 
   // ---------- Fogli: voce e testo ----------
@@ -222,13 +244,19 @@
     var r = el('input'); r.type = 'range'; r.min = '0.8'; r.max = '1.5'; r.step = '0.05'; r.value = String(VEL);
     r.oninput = function () { VEL = Number(r.value); lab.textContent = 'Velocità: ' + VEL.toFixed(2).replace('.', ','); conf.vel = VEL; salva(); };
     f.appendChild(r);
+    var etTono = function () { return 'Tono: ' + TONO.toFixed(2).replace('.', ',') + ' (più basso = voce più grave)'; };
+    var labT = el('label', '', etTono());
+    f.appendChild(labT);
+    var rt = el('input'); rt.type = 'range'; rt.min = '0.6'; rt.max = '1.3'; rt.step = '0.05'; rt.value = String(TONO);
+    rt.oninput = function () { TONO = Number(rt.value); labT.textContent = etTono(); conf.tono = TONO; salva(); };
+    f.appendChild(rt);
     var az = el('div', 'azioni');
     var prova = el('button', 'btn', 'Prova la voce');
     prova.onclick = function () {
       ferma();
       try {
-        if (window.speechSynthesis) { var u = new SpeechSynthesisUtterance('Ciao! Questa è la voce della presentazione.'); u.lang = 'it-IT'; if (voce) u.voice = voce; u.rate = VEL; speechSynthesis.speak(u); }
-        else if (window.DZ && window.DZ.parla) window.DZ.parla('Ciao! Questa è la voce della presentazione.', VEL);
+        if (window.speechSynthesis) { var u = new SpeechSynthesisUtterance('Ciao! Questa è la voce della presentazione.'); u.lang = 'it-IT'; if (voce) u.voice = voce; u.rate = VEL; u.pitch = TONO; speechSynthesis.speak(u); }
+        else if (window.DZ && window.DZ.parla) { dzTono(); window.DZ.parla('Ciao! Questa è la voce della presentazione.', VEL); }
       } catch (e) {}
     };
     az.appendChild(prova);
@@ -246,7 +274,7 @@
     var c = el('button', 'btn', 'Chiudi'); c.onclick = chiudi; az2.appendChild(c);
     f.appendChild(az2);
   }
-  function salva() { try { localStorage.setItem('dz-pres-voce', JSON.stringify({ voce: conf.voce || '', vel: VEL })); } catch (e) {} }
+  function salva() { try { localStorage.setItem('dz-pres-voce2', JSON.stringify({ voce: conf.voce || '', vel: VEL, tono: TONO })); } catch (e) {} }
 
   function testoTutto() {
     return S.map(function (d, k) { return (k + 1) + '. ' + nm(d.t) + '\n' + nm(d.v); }).join('\n\n');

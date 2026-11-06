@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#161D3A">
-<title>CLAUDE-EXE spiegato semplice</title>
-<meta name="description" content="Presentazione parlata: cos'è CLAUDE-EXE e cosa sa fare.">
+<title>Claude-X spiegato semplice</title>
+<meta name="description" content="Presentazione parlata: com'è nato Claude-X, cos'è e cosa sa fare.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap" rel="stylesheet">
@@ -18,16 +18,17 @@
 <body>
 <noscript>Per ascoltare la presentazione serve JavaScript attivo.</noscript>
 <script>
-// Presentazione per gli amici: cos'è CLAUDE-EXE.
+// Presentazione per gli amici: com'è nato Claude-X e cos'è (6/11/2026: nome nuovo Claude-X, app Dx-Zapp).
 window.PRES = {
   id: 'claude-exe',
-  marchio: 'CLAUDE-EXE',
-  vel: 1.1,
-  pronuncia: [['CLAUDE-EXE', 'Clod Exe'], ['Claude', 'Clod'], ['DZ App', 'Di Zeta App']],
+  marchio: 'Claude-X',
+  vel: 1.2,
+  tono: 0.85,
+  pronuncia: [['Claude-X', 'Clod Ics'], ['Dx-Zapp', 'Di Ics Zapp'], ['Claude', 'Clod'], ['APPS EDITOR', 'Èps Èditor'], ['Apps Script', 'Èps Script'], ['PastView', 'Past Viù']],
   etichette: { tu: 'Daniel', ai: 'Claude' },
   inizio: {
-    t: 'CLAUDE‑EXE, spiegato semplice',
-    x: 'Presentazione parlata, circa 3 minuti. Alza il volume e tocca play.',
+    t: 'Claude‑X, spiegato semplice',
+    x: 'Presentazione parlata, circa 5 minuti: com\'è nato e cosa sa fare. Alza il volume e tocca play.',
     chat: [
       { da: 'tu', t: 'Crea un\'app per segnare le ore di lavoro.' },
       { da: 'ai', t: 'Creata e pubblicata. Ecco il link.' }
@@ -36,16 +37,56 @@ window.PRES = {
   },
   slide: [
     { t: 'Un\'intelligenza artificiale con le mani.',
-      x: 'Claude è l\'intelligenza artificiale di Anthropic. CLAUDE-EXE le permette di lavorare davvero sull\'account Google di Daniel.',
-      v: 'Ciao! Ti spieghiamo in pochi minuti cos\'è CLAUDE-EXE. Claude è un\'intelligenza artificiale, come ChatGPT. Di solito un\'intelligenza artificiale ti risponde, e finisce lì. CLAUDE-EXE le dà le mani: le permette di lavorare davvero sull\'account Google di Daniel.' },
+      x: 'Claude è l\'intelligenza artificiale di Anthropic. Claude-X le permette di lavorare davvero sull\'account Google di Daniel.',
+      v: 'Ciao! Ti raccontiamo in pochi minuti cos\'è Claude-X, e come è nato. Claude è un\'intelligenza artificiale, come ChatGPT. Di solito un\'intelligenza artificiale ti risponde, e finisce lì. Claude-X le dà le mani: le permette di lavorare davvero sull\'account Google di Daniel.' },
+
+    { t: 'Com\'è nato: le app dal telefono.',
+      x: 'Tutto parte da un\'idea: fare le app direttamente dal telefono. Con il computer era tutto più macchinoso, e il computer non ce l\'hai sempre con te.',
+      v: 'Ma partiamo dall\'inizio. Tutto è nato da un\'idea di Daniel: fare le app direttamente dal telefono. Con il computer era tutto più macchinoso. E poi, il computer non ce l\'hai sempre con te.' },
+
+    { t: 'Prima prova: l\'AI dentro le app.',
+      l: ['App con l\'intelligenza artificiale integrata: limitate e costose', 'In chat con Claude: più fluido, più potenza, più ragionamento'],
+      v: 'La prima strada sono state app con l\'intelligenza artificiale dentro. Funzionavano, ma erano limitate, e costose. Lavorare in chat con Claude, invece, era molto più fluido: più potenza, e molta più capacità di ragionare.' },
+
+    { t: 'Idee nuove, tante prove.',
+      x: 'Daniel porta idee che in giro non si trovano. Claude le valuta e dice se si possono fare. Alcune prove funzionano, altre sembrano buone ma poi falliscono.',
+      v: 'Da lì Daniel ha iniziato a sviluppare le sue idee, anche idee che in giro non si trovavano. Claude le valutava, e diceva se si potevano fare. Alcune prove hanno funzionato. Altre sembravano interessanti, ma poi sono fallite. Fa parte del gioco.' },
+
+    { t: 'Il primo traguardo: APPS EDITOR.',
+      x: 'Dopo tante app, un editor per scrivere e modificare le app direttamente dal telefono. Noi uno strumento così non l\'avevamo mai trovato.',
+      v: 'Dopo tante app, il primo grande traguardo: APPS EDITOR. Un programma per scrivere e modificare le app direttamente dal telefono, comodo e veloce. Uno strumento così, noi non l\'avevamo mai trovato.' },
+
+    { t: 'Un\'app Android per andare oltre il browser.',
+      x: 'Lavorare nel browser del telefono aveva dei limiti. È nata PastView, un\'app Android che apre e gestisce i file delle app, insieme ad APPS EDITOR.',
+      v: 'Lavorare nel browser del telefono, però, aveva dei limiti. Così è nata un\'app Android, PastView, che lavora direttamente sui file delle app, insieme ad APPS EDITOR.' },
+
+    { t: 'La bolla.',
+      n: ['Copi il codice che ti dà Claude', 'Tocchi la bolla che galleggia sopra la chat', 'Il codice arriva nell\'app, già pronto per Apps Script', 'Da lì si salva nel Drive e si pubblica'],
+      v: 'Poi è arrivata la bolla. Prima bisognava copiare il codice dalla chat, aprire l\'app, e incollarlo. Con la bolla, invece, che galleggia sopra la chat, basta copiare il codice e toccarla. Il codice arriva da solo nell\'app, che lo trasforma nel formato giusto per Apps Script, nel Drive. E da lì, l\'app si pubblica.' },
+
+    { t: 'Cos\'è Apps Script.',
+      l: ['Il motore di Google per creare app: basta un account Google', 'Lavora con Gmail, Drive, Fogli, Documenti, Calendar e Moduli', 'Pubblica un\'app come pagina web, che si apre anche sul telefono', 'Fa partire dei lavori da solo, a un\'ora precisa'],
+      v: 'Ma cos\'è Apps Script? È il motore di Google per creare app, e basta un account Google per usarlo. Lavora con Gmail, Drive, Fogli, Documenti, Calendar e Moduli. Pubblica un\'app come pagina web, che si apre anche sul telefono. E può far partire dei lavori da solo, a un\'ora precisa.' },
+
+    { t: 'L\'ultimo passo: Claude-X.',
+      x: 'Perché fare a mano anche quello? Le idee sono di Daniel, Claude le ha valutate. Dopo tante prove ed esperimenti, è nato Claude-X.',
+      v: 'E poi l\'ultima idea: non dover fare a mano più neanche quello. Così è iniziato lo studio di Claude-X. Anche qui, le idee sono di Daniel. Claude le ha valutate e ha detto se si potevano fare. Dopo tante prove, ed esperimenti, si è arrivati a Claude-X. Ecco come funziona oggi.' },
 
     { t: 'Come funziona.',
-      n: ['Daniel parla con Claude dal telefono, anche a voce', 'Claude scrive un comando in un foglio Google', 'CLAUDE-EXE lo esegue e scrive com\'è andata', 'Claude legge l\'esito e lo spiega a Daniel'],
-      v: 'Come funziona? Daniel parla con Claude dal telefono, anche a voce. Claude scrive un comando in un foglio Google. CLAUDE-EXE, un programma che vive nell\'account di Daniel, legge il comando, lo esegue e scrive com\'è andata. Poi Claude legge l\'esito e lo spiega a Daniel.' },
+      n: ['Daniel parla con Claude dal telefono, anche a voce', 'Claude scrive un comando in un foglio Google', 'Claude-X lo esegue e scrive com\'è andata', 'Claude legge l\'esito e lo spiega a Daniel'],
+      v: 'Daniel parla con Claude dal telefono, anche a voce. Claude scrive un comando in un foglio Google. Claude-X, un programma che vive nell\'account di Daniel, legge il comando, lo esegue e scrive com\'è andata. Poi Claude legge l\'esito, e lo spiega a Daniel.' },
 
     { t: 'Cosa sa fare.',
       l: ['Crea app nuove e le pubblica', 'Modifica il codice delle app esistenti', 'Manda mail e messaggi su Telegram', 'Crea documenti, fogli, presentazioni e moduli', 'Programma un lavoro per un\'ora precisa'],
       v: 'Cosa sa fare? Crea app nuove e le pubblica. Modifica il codice delle app che esistono già. Manda mail e messaggi su Telegram. Crea documenti, fogli, presentazioni e moduli Google. E può programmare un lavoro per un\'ora precisa.' },
+
+    { t: 'Non solo app per il telefono.',
+      l: ['App per il telefono, Android o iPhone', 'App per il PC o il Mac', 'Plugin per i programmi che hai già, come Lightroom'],
+      v: 'E le app non sono solo per il telefono. Possono essere app per Android o iPhone, app per il PC o per il Mac, oppure plugin per i programmi che usi già, per esempio Lightroom.' },
+
+    { t: 'Prima capiamo cosa serve.',
+      n: ['Ci racconti cosa vuoi', 'Ti arrivano dei brevi questionari a risposta multipla', 'Con le risposte abbiamo un\'idea chiara delle esigenze', 'Solo allora si costruisce'],
+      v: 'Come si comincia? Prima capiamo cosa vuoi. Poi ti arrivano dei brevi questionari a risposta multipla: rispondi in pochi minuti, anche dal telefono. Così ci facciamo un\'idea precisa delle tue esigenze, e l\'app nasce già giusta.' },
 
     { t: 'Decide sempre Daniel.',
       l: ['Un pannello sul telefono, con il tasto Approva', 'Le azioni delicate aspettano il suo sì', 'Un interruttore per ogni funzione, più uno generale'],
@@ -53,19 +94,19 @@ window.PRES = {
 
     { t: 'Niente va perso.',
       l: ['Una copia di sicurezza prima di ogni modifica', 'Si torna indietro con un tocco', 'Il codice è salvato anche su GitHub'],
-      v: 'E niente va perso. Prima di ogni modifica, CLAUDE-EXE fa una copia di sicurezza, e se qualcosa non va si torna indietro con un tocco. Tutto il codice è salvato anche su GitHub, con un controllo che impedisce di cancellare per sbaglio il lavoro già fatto.' },
+      v: 'E niente va perso. Prima di ogni modifica, Claude-X fa una copia di sicurezza, e se qualcosa non va si torna indietro con un tocco. Tutto il codice è salvato anche su GitHub, con un controllo che impedisce di cancellare per sbaglio il lavoro già fatto.' },
 
     { t: 'Lavora anche con altre AI.',
       x: 'ChatGPT o Gemini possono consegnare il loro codice. Con la bolla AI: copi la risposta, tocchi la bolla e vedi le differenze prima di applicarle.',
       v: 'Lavora anche con altre intelligenze artificiali. ChatGPT o Gemini possono consegnare il loro codice in una cartella condivisa. Oppure c\'è la bolla: copi la risposta, tocchi la bolla sullo schermo, e il pannello ti mostra le differenze prima di applicarle.' },
 
     { t: 'Le app arrivano agli amici con una chiave.', chiave: true,
-      l: ['Dal pannello si crea la chiave e parte la mail', 'L\'amico installa DZ App: l\'app va nel suo account, con i suoi dati', 'La chiave dura da un giorno a un anno, o per sempre'],
-      v: 'E le app possono arrivare agli amici, o ai clienti. Dal pannello si crea una chiave e parte la mail. L\'amico installa DZ App, e l\'app viene installata nel suo account Google, con i suoi dati. La chiave può durare da un giorno a un anno, oppure per sempre.' },
+      l: ['Dal pannello si crea la chiave e parte la mail', 'L\'amico installa Dx-Zapp: l\'app va nel suo account, con i suoi dati', 'La chiave dura da un giorno a un anno, o per sempre'],
+      v: 'E le app possono arrivare agli amici, o ai clienti. Dal pannello si crea una chiave e parte la mail. L\'amico installa Dx-Zapp, e l\'app viene installata nel suo account Google, con i suoi dati. La chiave può durare da un giorno a un anno, oppure per sempre.' },
 
-    { t: 'Tutto dal telefono.',
-      x: 'Daniel non usa un computer. Il lavoro tecnico lo fa Claude: lui spiega cosa vuole, guarda il risultato e approva.',
-      v: 'E la cosa che stupisce di più: Daniel fa tutto dal telefono. Non usa un computer. Il lavoro tecnico lo fa Claude. Lui spiega cosa vuole, guarda il risultato e approva.' },
+    { t: 'Perché è diverso.',
+      l: ['Non dà solo consigli: fa davvero il lavoro', 'Tutto dal telefono, senza computer', 'Sicuro: approva Daniel, copie di sicurezza, interruttori', 'Lavora nell\'account Google: i dati restano lì', 'Nato dalle idee di Daniel: qualcosa di simile non l\'abbiamo trovato'],
+      v: 'Allora, cosa rende Claude-X diverso? Non si limita a dare consigli: fa davvero il lavoro. Si usa tutto dal telefono: Daniel non usa un computer. È sicuro: decide sempre Daniel, c\'è una copia di sicurezza prima di ogni modifica, e un interruttore per ogni funzione. E lavora nell\'account Google, quindi i dati restano lì. Perché non si trova in giro? Perché è nato su misura, dalle idee di Daniel e da tante prove. Noi, qualcosa di simile, non l\'abbiamo trovato.' },
 
     { t: 'Una mattina qualunque.',
       l: ['Una mail a un cliente con la sua presentazione', 'Un avviso automatico quando il cliente risponde al questionario', 'Un tasto nuovo in un\'app, pubblicato e controllato in pochi minuti'],

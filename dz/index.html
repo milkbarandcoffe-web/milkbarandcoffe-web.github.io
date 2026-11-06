@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>DZ App</title>
+<title>Dx-Zapp</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{background:#0a0a0b}
@@ -27,7 +27,7 @@ body{color:#eee;font:15px/1.45 system-ui,sans-serif;min-height:100vh;background:
 </head>
 <body>
 <div class="pg" id="pg">
-<div class="lt">DZ App</div>
+<div class="lt">Dx-Zapp</div>
 <div class="ls">idea e sviluppo by Daniel Zavan</div>
 <div id="main"></div>
 <div class="firma">idea e sviluppo by Daniel Zavan</div>
@@ -47,7 +47,7 @@ var c=el('div','card');
 if(!K){
 c.appendChild(el('b','','Link senza chiave'));
 c.appendChild(el('div','nota err','Questo link non contiene una chiave valida. Chiedi il link giusto a chi te lo ha mandato.'));
-var s0=el('a','bt sec','SCARICA DZ App');s0.href=APK;c.appendChild(s0);
+var s0=el('a','bt sec','SCARICA Dx-Zapp');s0.href=APK;c.appendChild(s0);
 }else if(ios){
 c.appendChild(el('b','','La tua chiave · iPhone'));
 c.appendChild(el('div','k',K));
@@ -58,21 +58,21 @@ pi.appendChild(el('p','','Alla fine apri l\'app e aggiungila alla schermata Home
 c.appendChild(pi);
 var bi=el('a','bt','APRI L\'INSTALLAZIONE');bi.href=INSTALLER+'?k='+encodeURIComponent(K)+'&s='+encodeURIComponent(SERVIZIO);
 c.appendChild(bi);
-c.appendChild(el('div','nota','Su iPhone non serve DZ App: l\'app funziona nel browser.'));
+c.appendChild(el('div','nota','Su iPhone non serve Dx-Zapp: l\'app funziona nel browser.'));
 }else{
 c.appendChild(el('b','','La tua chiave'));
 c.appendChild(el('div','k',K));
 var ps=el('div','passi');
-ps.appendChild(el('p','','Se non hai ancora DZ App: premi SCARICA DZ App e installala (Android può chiedere di consentire l\'installazione da questa fonte).'));
-ps.appendChild(el('p','','Torna su questa pagina e premi APRI DZ App: la chiave entra da sola.'));
+ps.appendChild(el('p','','Se non hai ancora Dx-Zapp: premi SCARICA Dx-Zapp e installala (Android può chiedere di consentire l\'installazione da questa fonte).'));
+ps.appendChild(el('p','','Torna su questa pagina e premi APRI Dx-Zapp: la chiave entra da sola.'));
 ps.appendChild(el('p','','Accedi con il tuo account Google e segui i passi.'));
 c.appendChild(ps);
-var ap=el('a','bt','APRI DZ App');
+var ap=el('a','bt','APRI Dx-Zapp');
 ap.href='intent://chiave?k='+encodeURIComponent(K)+'#Intent;scheme=dzapp;package='+PACCHETTO_ANDROID+';S.browser_fallback_url='+encodeURIComponent(APK)+';end';
-var sc=el('a','bt sec','SCARICA DZ App');sc.href=APK;
+var sc=el('a','bt sec','SCARICA Dx-Zapp');sc.href=APK;
 var br=el('a','bt sec','Non ho Android: apri nel browser');br.href=INSTALLER+'?k='+encodeURIComponent(K)+'&s='+encodeURIComponent(SERVIZIO);br.target='_blank';
 if(android){c.appendChild(ap);c.appendChild(sc);}else{c.appendChild(br);}
-c.appendChild(el('div','nota','Se APRI DZ App non fa niente: apri DZ App, tocca + e scrivi la chiave qui sopra.'));
+c.appendChild(el('div','nota','Se APRI Dx-Zapp non fa niente: apri Dx-Zapp, tocca + e scrivi la chiave qui sopra.'));
 if(android)c.appendChild(br);
 }
 M.appendChild(c);

@@ -19,8 +19,9 @@
 window.PRES = {
   id: 'su-misura',
   marchio: 'Daniel Zavan',
-  vel: 1.1,
-  pronuncia: [['Claude', 'Clod']],
+  vel: 1.2,
+  tono: 0.85,
+  pronuncia: [['Claude-X', 'Clod Ics'], ['Dx-Zapp', 'Di Ics Zapp'], ['Claude', 'Clod']],
   etichette: { tu: 'Tu', ai: 'Claude' },
   wa: 'Ciao Daniel, ho visto la presentazione. Parliamo della mia app?',
   inizio: {
@@ -45,13 +46,21 @@ window.PRES = {
       x: 'Con i tuoi nomi, i tuoi passaggi, il tuo modo di lavorare. Niente menu inutili, niente da imparare.',
       v: 'L\'idea è semplice: un\'app che fa esattamente quello che serve a te. Con i tuoi nomi, i tuoi passaggi, il tuo modo di lavorare. Niente menu inutili, niente da imparare.' },
 
-    { t: 'Daniel viene da te, con il telefono.',
+    { t: 'Sul telefono, sul PC o sul Mac.',
+      l: ['Un\'app per il telefono, Android o iPhone', 'Un\'app per il PC o il Mac', 'Oppure un plugin per i programmi che usi già'],
+      v: 'E la tua app può essere dove ti serve: sul telefono, Android o iPhone, sul PC o sul Mac. Oppure può essere un plugin per un programma che usi già, così non cambi niente del tuo modo di lavorare.' },
+
+    { t: 'Prima capiamo cosa ti serve.',
+      n: ['Ci racconti cosa vuoi', 'Ti arrivano dei brevi questionari a risposta multipla', 'Con le tue risposte abbiamo un\'idea chiara delle tue esigenze'],
+      v: 'Come si comincia? Prima capiamo cosa vuoi. Poi ti arrivano dei brevi questionari a risposta multipla: rispondi in pochi minuti, anche dal telefono, toccando le risposte. Così ci facciamo un\'idea precisa delle tue esigenze, e la tua app nasce già giusta.' },
+
+    { t: 'Poi l\'app prende forma.',
       x: 'Tu racconti. Claude costruisce. Daniel controlla.',
       chat: [
         { da: 'tu', t: 'Quando un cliente prenota, vorrei mandargli un WhatsApp già scritto.' },
         { da: 'ai', t: 'Fatto: scegli il cliente e il messaggio parte con un tocco.' }
       ],
-      v: 'Come nasce la tua app? Daniel viene da te, con il suo telefono. Gli racconti come lavori, con parole tue. Lui lo spiega a Claude, l\'intelligenza artificiale con cui lavora, e l\'app prende forma mentre parlate. Tu racconti, Claude costruisce, Daniel controlla che tutto funzioni.' },
+      v: 'Poi l\'app prende forma. Daniel viene da te, con il suo telefono. Gli racconti come lavori, con parole tue. Lui lo spiega a Claude, l\'intelligenza artificiale con cui lavora, e l\'app prende forma mentre parlate. Tu racconti, Claude costruisce, Daniel controlla che tutto funzioni.' },
 
     { t: 'La prima versione la provi in pochissimo tempo.',
       x: 'Spesso già il giorno stesso. Se qualcosa non ti convince, lo dici e si cambia: si va avanti a piccoli passi, sempre con l\'app in mano.',
@@ -62,8 +71,8 @@ window.PRES = {
       v: 'Qualche esempio di lavori veri. Per un orto: clienti, cassette del giorno, prenotazioni, e il messaggio WhatsApp al cliente con un tocco. Un calendario di turni e ore lavorate, con i promemoria via mail. E per un fotografo stiamo automatizzando il lavoro di tutti i giorni in Lightroom.' },
 
     { t: 'I tuoi dati restano tuoi.',
-      l: ['L\'app vive nel tuo account Google', 'Clienti, fogli e documenti nel tuo Google Drive', 'Funziona su Android e su iPhone'],
-      v: 'Una cosa importante: i tuoi dati restano tuoi. L\'app viene installata nel tuo account Google. Clienti, fogli e documenti stanno nel tuo Google Drive, non sui computer di qualcun altro. E funziona sia su Android che su iPhone.' },
+      l: ['L\'app vive nel tuo account Google', 'Clienti, fogli e documenti nel tuo Google Drive', 'Funziona su Android, iPhone, PC e Mac'],
+      v: 'Una cosa importante: i tuoi dati restano tuoi. L\'app viene installata nel tuo account Google. Clienti, fogli e documenti stanno nel tuo Google Drive, non sui computer di qualcun altro. E funziona su Android, su iPhone, sul PC e sul Mac.' },
 
     { t: 'Si usa con una chiave.', chiave: true,
       x: 'Come un abbonamento: scegli tu per quanto tempo, da un mese a un anno. Paghi solo il periodo che ti serve.',
