@@ -30,6 +30,10 @@
   };
   var CHIAVE = '<svg class="chiave" viewBox="0 0 240 100" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="50" r="32"/><circle cx="50" cy="50" r="9"/><path d="M82 50h140M190 50v24M210 50v16M168 50v14"/></g></svg>';
 
+  // Tasti in basso: PRES.strumenti (default Voce, Video, Testo). Altri: indice, domande (PRES.domande = {href}).
+  var NOMI_STR = { voce: 'Voce', video: 'Video', testo: 'Testo', indice: 'Indice', domande: 'Domande' };
+  var STRUMENTI = (P.strumenti || ['voce', 'video', 'testo']).filter(function (k) { return NOMI_STR[k] && (k !== 'domande' || (P.domande && P.domande.href)); });
+
   // ---------- Struttura della pagina ----------
   document.body.innerHTML =
     '<div class="testa"><div class="riga"><span class="firma"></span><span id="num"></span></div><div class="barra"><i id="barra"></i></div></div>' +
@@ -38,11 +42,12 @@
     '<div class="com"><button class="tondo" id="prima" aria-label="Indietro">' + ICO.prima + '</button>' +
     '<button class="play" id="play" aria-label="Ascolta">' + ICO.play + '</button>' +
     '<button class="tondo" id="dopo" aria-label="Avanti">' + ICO.dopo + '</button></div>' +
-    '<div class="strumenti"><button id="bVoce">Voce</button><button id="bVideo">Video</button><button id="bTesto">Testo</button></div>' +
+    '<div class="strumenti">' + STRUMENTI.map(function (k) { return '<button id="b' + k.charAt(0).toUpperCase() + k.slice(1) + '">' + NOMI_STR[k] + '</button>'; }).join('') + '</div>' +
     '<p class="avviso" id="avviso"></p></div>' +
     '<div class="velo" id="velo"></div>' +
     '<div class="foglio" id="fVoce" role="dialog" aria-label="Voce"></div>' +
     '<div class="foglio" id="fTesto" role="dialog" aria-label="Testo letto"></div>' +
+    '<div class="foglio" id="fIndice" role="dialog" aria-label="Indice"></div>' +
     '<div class="conto" id="conto"></div>' +
     '<button class="btn pieno esci" id="esci">Tocca di nuovo per uscire</button>';
   document.querySelector('.firma').textContent = P.marchio || '';
@@ -90,6 +95,13 @@
       s.appendChild(ul);
     }
     if (d.chat) chat(d.chat, s);
+    if (d.link && !d.fine) {
+      var az0 = el('div', 'azioni');
+      var a0 = el('a', 'btn pieno', d.link.t);
+      a0.href = d.link.href; a0.target = '_blank'; a0.rel = 'noopener';
+      az0.appendChild(a0);
+      s.appendChild(az0);
+    }
     if (d.fine) {
       var az = el('div', 'azioni');
       if (TEL && P.wa) {
@@ -101,6 +113,7 @@
       if (d.link) {
         var a = el('a', 'btn' + (TEL && P.wa ? '' : ' pieno'), d.link.t);
         a.href = d.link.href; a.onclick = ferma;
+        if (d.link.nuova) { a.target = '_blank'; a.rel = 'noopener'; }
         az.appendChild(a);
       }
       var r = el('button', 'btn', 'Riascolta dall\'inizio');
@@ -263,7 +276,30 @@
 
   // ---------- Fogli: voce e testo ----------
   function apri(id) { chiudi(); document.body.classList.add('aperto'); g(id).classList.add('su'); }
-  function chiudi() { document.body.classList.remove('aperto'); g('fVoce').classList.remove('su'); g('fTesto').classList.remove('su'); }
+  function chiudi() { document.body.classList.remove('aperto'); ['fVoce', 'fTesto', 'fIndice'].forEach(function (id) { g(id).classList.remove('su'); }); }
+
+  // Indice: titoli delle slide (raggruppati per PRES.slide[n].sez); tocco = vai alla slide.
+  function foglioIndice() {
+    var f = g('fIndice'); f.innerHTML = '';
+    f.appendChild(el('h2', '', 'Indice'));
+    var ol = el('ul', 'indice'), sez = '';
+    S.forEach(function (d, k) {
+      if (d.sez && d.sez !== sez) { sez = d.sez; var h = el('li', 'sez', sez); ol.appendChild(h); }
+      var li = el('li', 'voce' + (k === i ? ' qui' : ''));
+      var b = el('button', '', (k + 1) + '. ' + nm(d.t));
+      b.onclick = function () { var on = parla; chiudi(); ferma(); i = k; mostra(); if (on) avvia(); };
+      li.appendChild(b); ol.appendChild(li);
+    });
+    f.appendChild(ol);
+    var az = el('div', 'azioni');
+    if (P.domande && P.domande.href) {
+      var q = el('a', 'btn pieno', P.domande.t || 'Domande e suggerimenti');
+      q.href = P.domande.href; q.target = '_blank'; q.rel = 'noopener'; q.onclick = ferma;
+      az.appendChild(q);
+    }
+    var c = el('button', 'btn', 'Chiudi'); c.onclick = chiudi; az.appendChild(c);
+    f.appendChild(az);
+  }
   g('velo').onclick = chiudi;
 
   function foglioVoce() {
@@ -402,9 +438,11 @@
     var on = parla; ferma();
     if (i > 0) { i--; mostra(); if (on) avvia(); }
   };
-  g('bVoce').onclick = function () { foglioVoce(); apri('fVoce'); };
-  g('bTesto').onclick = function () { foglioTesto(); apri('fTesto'); };
-  g('bVideo').onclick = videoAvvia;
+  if (g('bVoce')) g('bVoce').onclick = function () { foglioVoce(); apri('fVoce'); };
+  if (g('bTesto')) g('bTesto').onclick = function () { foglioTesto(); apri('fTesto'); };
+  if (g('bVideo')) g('bVideo').onclick = videoAvvia;
+  if (g('bIndice')) g('bIndice').onclick = function () { foglioIndice(); apri('fIndice'); };
+  if (g('bDomande')) g('bDomande').onclick = function () { ferma(); window.open(P.domande.href, '_blank', 'noopener'); };
   document.addEventListener('keydown', function (e) {
     if (document.body.classList.contains('aperto')) { if (e.key === 'Escape') chiudi(); return; }
     if (e.key === 'ArrowRight') g('dopo').click();

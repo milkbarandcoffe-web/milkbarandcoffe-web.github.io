@@ -125,3 +125,12 @@ ol li::before{
   .inizio .scrive{display:none}
   .vis .chiave,.scrive i{animation:none}
 }
+/* Indice (12/11/2026) */
+.indice{list-style:none;margin:0;padding:0}
+.indice .sez{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accento);margin:16px 0 6px;font-weight:700}
+.indice .voce button{display:block;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--linea);color:var(--carta);font:inherit;font-size:16px;padding:12px 4px;cursor:pointer}
+.indice .voce.qui button{color:var(--accento);font-weight:700}
+.strumenti{flex-wrap:wrap}
+.indice li{padding:0!important;margin:0!important;border:0!important}
+.indice li::before{content:none!important;display:none!important}
+.indice li.sez{margin:16px 0 4px!important}

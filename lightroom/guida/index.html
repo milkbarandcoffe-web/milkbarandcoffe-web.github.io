@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0E1A2B">
+<title>DZ Auto guida</title>
+<meta name="description" content="Guida parlata del plugin DZ Auto per Lightroom Classic: installazione, chiave e uso.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../presenta/stile.css">
+<style>
+:root{--fondo:#0E1A2B;--fondo2:#17304D;--carta:#EAF2FB;--tenue:#9FB4CC;--accento:#5AB0FF;--su-accento:#06182B;--linea:rgba(234,242,251,.16)}
+</style>
+</head>
+<body>
+<noscript>Per ascoltare la guida serve JavaScript attivo.</noscript>
+<script>
+// Guida del plugin DZ Auto per Luca (12/11/2026). Indice e Domande in basso.
+window.PRES = {
+  id: 'guida-dzauto',
+  marchio: 'DZ Auto · guida',
+  vel: 1.2,
+  tono: 0.85,
+  strumenti: ['indice', 'voce', 'domande'],
+  domande: { t: 'Scrivi domande o suggerimenti', href: 'https://milkbarandcoffe-web.github.io/dzauto-domande/' },
+  pronuncia: [['DZ Auto', 'Di Zeta Auto'], ['Lightroom', 'Lait rum'], ['plug-in', 'plag in'], ['Z6 II', 'Zeta 6 seconda'], ['JPEG', 'gei peg'], ['iPhone', 'aifon'], ['copyright', 'copirait'], ['Finder', 'Fainder']],
+  inizio: {
+    t: 'DZ Auto, la guida',
+    x: 'Installazione, chiave e uso del plugin in pochi minuti. Alza il volume e tocca play. In basso trovi Indice e Domande.',
+    firma: 'idea e sviluppo by Daniel Zavan'
+  },
+  slide: [
+    { sez: 'Inizio', t: 'Ciao Luca!',
+      x: 'DZ Auto è il plugin per Lightroom Classic pensato per il tuo lavoro: meno ore davanti al Mac, stessa qualità.',
+      v: 'Ciao Luca! Questa è la guida di DZ Auto, il plugin per Lightroom Classic pensato per il tuo lavoro. L\'obiettivo è semplice: meno ore davanti al Mac, con la stessa qualità di sempre. In basso trovi l\'indice, per saltare dove vuoi, e il tasto per mandarci domande.' },
+
+    { sez: 'Inizio', t: 'Cosa fa.',
+      l: ['Applica i tuoi preset, uno per la D850 e uno per la Z6 II', 'Mette le foto in ordine di scatto, anche con due fotocamere', 'Esporta la consegna: alta qualità e web, con i nomi che scegli tu', 'Scrive la tua firma e il copyright nelle foto', 'Ti avvisa sul telefono quando l\'esportazione è finita'],
+      v: 'Cosa fa? Applica i tuoi preset, anche uno diverso per la D850 e per la Z6 II. Mette le foto in ordine di scatto, anche se usi due fotocamere. Esporta la consegna, in alta qualità e per il web, con i nomi che scegli tu. Scrive la tua firma e il copyright nelle foto. E quando l\'esportazione è finita, ti avvisa sul telefono.' },
+
+    { sez: 'Installazione', t: 'Scarica il plugin.',
+      n: ['Sul Mac apri questa pagina e tocca il tasto qui sotto', 'Apri il file DZAuto.zip che hai scaricato', 'Compare la cartella DZAuto.lrplugin: spostala in Documenti e non cancellarla'],
+      link: { t: 'Scarica DZ Auto (Mac)', href: '../DZAuto.zip' },
+      v: 'Partiamo dall\'installazione. Sul Mac apri questa pagina e scarica il plugin con il tasto. Apri il file zip: compare una cartella che si chiama DZ Auto punto lrplugin. Spostala nella cartella Documenti, e non cancellarla: Lightroom la usa ogni volta.' },
+
+    { sez: 'Installazione', t: 'Aggiungilo a Lightroom.',
+      n: ['Apri Lightroom Classic', 'Menu File > Gestione plug-in (in inglese: Plug-in Manager)', 'In basso a sinistra premi Aggiungi', 'Scegli la cartella DZAuto.lrplugin e confermi', 'Nell\'elenco compare DZ Auto con il pallino verde'],
+      v: 'Ora apri Lightroom Classic. Dal menu File scegli Gestione plug-in. In basso a sinistra premi Aggiungi, scegli la cartella DZ Auto e conferma. Nell\'elenco compare DZ Auto, con il pallino verde. I nomi dei menu possono cambiare un poco, ma la strada è questa.' },
+
+    { sez: 'Installazione', t: 'Metti la chiave.',
+      n: ['Sempre in Gestione plug-in, seleziona DZ Auto', 'Nel riquadro "DZ Auto: chiave" scrivi la chiave che ti ha mandato Daniel', 'Premi VERIFICA', 'Deve comparire: "Chiave valida fino al…"'],
+      v: 'Adesso la chiave. Sempre in Gestione plug-in, seleziona DZ Auto. Nel riquadro della chiave scrivi quella che ti ha mandato Daniel, e premi Verifica. Deve comparire: chiave valida fino al, e la data. Per i primi tre mesi è tutto gratis.' },
+
+    { sez: 'Installazione', t: 'La tua firma.',
+      x: 'Nel riquadro "Firma e copyright" scrivi autore, copyright (per esempio © 2026 Luca Berti), mail, sito e telefono. Vanno nelle foto che consegni.',
+      v: 'Poco più sotto c\'è il riquadro Firma e copyright. Scrivi il tuo nome, il copyright, per esempio: copyright duemilaventisei Luca Berti, e poi mail, sito e telefono. Queste informazioni vengono scritte dentro le foto che consegni: così, se girano, si sa che sono tue.' },
+
+    { sez: 'Installazione', t: 'Prova l\'avviso.',
+      x: 'Nel riquadro "Avvisi e orologi" premi PROVA AVVISO: dopo qualche secondo arriva una mail sul telefono.',
+      v: 'Ultima prova: nel riquadro Avvisi e orologi premi Prova avviso. Dopo qualche secondo ti arriva una mail sul telefono. Se arriva, è tutto pronto.' },
+
+    { sez: 'Usarlo', t: 'Dove sono i comandi.',
+      x: 'Menu File > Extra plug-in (in inglese: Plug-in Extras): trovi le voci di DZ Auto.',
+      l: ['Applica preset', 'Allinea orologi', 'Firma e copyright', 'Esporta consegna', 'Domande e suggerimenti'],
+      v: 'Come si usa? Tutti i comandi sono nel menu File, alla voce Extra plug-in. Trovi Applica preset, Allinea orologi, Firma e copyright, Esporta consegna, e Domande e suggerimenti.' },
+
+    { sez: 'Usarlo', t: 'Allinea gli orologi.',
+      n: ['Scegli 2 foto dello stesso istante, una per fotocamera (il bacio, il lancio del riso)', 'Selezionale tutte e due', 'File > Extra plug-in > DZ Auto: Allinea orologi', 'Premi Salva'],
+      x: 'I file non vengono toccati: serve solo per l\'ordine della consegna.',
+      v: 'Prima cosa, una volta per servizio: allinea gli orologi. Anche se sono sincronizzati, le due fotocamere possono avere qualche secondo di differenza. Scegli due foto dello stesso istante, per esempio il bacio, una della D850 e una della Z6 II. Selezionale tutte e due, scegli Allinea orologi e premi Salva. I file non vengono toccati: serve solo per l\'ordine.' },
+
+    { sez: 'Usarlo', t: 'Applica i preset.',
+      n: ['Seleziona le foto, oppure nessuna per prenderle tutte', 'File > Extra plug-in > DZ Auto: Applica preset', 'Scegli un preset per la D850 e uno per la Z6 II', 'Premi Applica'],
+      x: 'Le prime volte provalo su poche foto. Se un preset con maschere AI blocca Lightroom, avvisaci.',
+      v: 'Poi i preset. Seleziona le foto, oppure nessuna, per prenderle tutte. Scegli Applica preset: per ogni fotocamera scegli il tuo preset, e premi Applica. Le prime volte provalo su poche foto. Se un preset con maschere intelligenti dovesse bloccare Lightroom, scrivicelo.' },
+
+    { sez: 'Usarlo', t: 'Scegli le foto.',
+      l: ['Tasto P = bandierina, foto scelta', 'Tasto X = foto scartata', 'Puoi usare anche la selezione assistita di Lightroom, se c\'è nella tua versione'],
+      v: 'Per scegliere le foto usa la bandierina: tasto P per tenerla, tasto X per scartarla. Puoi usare anche la selezione assistita di Lightroom, se c\'è nella tua versione. Alla consegna, DZ Auto prende solo le foto con la bandierina.' },
+
+    { sez: 'Usarlo', t: 'Esporta la consegna.',
+      n: ['File > Extra plug-in > DZ Auto: Esporta consegna', 'Scrivi il nome del servizio (per esempio Rossi) e scegli la cartella', 'Lascia "Solo le scelte con la bandierina"', 'Alta qualità e Web, filigrana se serve, avviso acceso', 'Premi Esporta'],
+      x: 'Alla fine trovi le cartelle "Rossi - Alta" e "Rossi - Web", con i file Rossi_0001.jpg, Rossi_0002.jpg… in ordine di scatto.',
+      v: 'E infine la consegna. Scegli Esporta consegna. Scrivi il nome del servizio, per esempio Rossi, e scegli la cartella. Lascia solo le foto con la bandierina, alta qualità e web, la filigrana se ti serve, e l\'avviso acceso. Premi Esporta. Troverai due cartelle, Rossi alta e Rossi web, con i file numerati in ordine di scatto.' },
+
+    { sez: 'Usarlo', t: 'Mentre esporta, vai pure.',
+      x: 'Puoi lasciare il Mac: quando ha finito ti arriva la mail "DZ Auto: Esportazione finita" con il numero delle foto.',
+      v: 'Mentre esporta, puoi anche alzarti e lasciare il Mac. Quando ha finito, ti arriva una mail sul telefono, con il numero delle foto esportate.' },
+
+    { sez: 'Consigli', t: 'Una seconda copia, gratis.',
+      x: 'Quando importi: pannello Gestione file > "Crea una seconda copia in" > un disco esterno. Lightroom copia le foto in due posti mentre importa.',
+      v: 'Un consiglio: quando importi, nel pannello Gestione file attiva Crea una seconda copia in, e scegli un disco esterno. Lightroom copia le foto in due posti mentre importa. Basta un disco che si rompe per perdere un matrimonio: così sei tranquillo. Decidi tu.' },
+
+    { sez: 'Consigli', t: 'Più veloce con le anteprime avanzate.',
+      x: 'Quando importi: "Genera Anteprime avanzate". Lo sviluppo diventa più fluido, soprattutto se il Mac fa fatica.',
+      v: 'Altro consiglio: quando importi, attiva Genera anteprime avanzate. Lo sviluppo diventa più fluido, soprattutto se il Mac fa un po\' di fatica.' },
+
+    { sez: 'Aiuto', t: 'Se qualcosa non va.',
+      n: ['File > Gestione plug-in > DZ Auto > MOSTRA DIAGNOSTICA', 'Copia il testo', 'Mandacelo con "Domande e suggerimenti"'],
+      v: 'Se qualcosa non va, niente paura. In Gestione plug-in, su DZ Auto, premi Mostra diagnostica, copia il testo e mandacelo con il tasto Domande. Lo leggiamo e ti rispondiamo.' },
+
+    { sez: 'Aiuto', t: 'Domande, richieste, idee?', fine: true,
+      x: 'Scrivile qui: le leggiamo tutte. Anche un suggerimento piccolo ci aiuta a migliorare DZ Auto per te.',
+      link: { t: 'Scrivi domande o suggerimenti', href: 'https://milkbarandcoffe-web.github.io/dzauto-domande/', nuova: true },
+      v: 'Hai domande, richieste o idee? Scrivile qui, con il tasto. Le leggiamo tutte, e anche un suggerimento piccolo ci aiuta a migliorare DZ Auto per te. Buon lavoro, Luca!' }
+  ]
+};
+</script>
+<script src="../../presenta/motore.js"></script>
+</body>
+</html>
