@@ -37,7 +37,8 @@
         .then(function (cfg) {
           var u = String(cfg.aiuto || '');
           if (!/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(u)) throw new Error('indirizzo');
-          var dest = u + (c ? '?c=' + c : '');
+          // Codice dopo # (con ?c= Google non apre la pagina): la porta dell'app lo legge e apre la pagina giusta.
+          var dest = u + (c ? '#c=' + c : '');
           var a = document.getElementById('a');
           a.href = dest;
           a.style.display = 'block';
