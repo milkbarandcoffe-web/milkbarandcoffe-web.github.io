@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0E1A2B">
 <title>DZ Auto aggiornamento</title>
-<meta name="description" content="Guida parlata: aggiornare il plugin DZ Auto alla versione 1.1.1.">
+<meta name="description" content="Guida parlata: aggiornare DZ Auto alla 2.0, creare il preset Automatico e fare la prova su 20 foto.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap" rel="stylesheet">
@@ -18,54 +18,74 @@
 <body>
 <noscript>Per ascoltare la guida serve JavaScript attivo.</noscript>
 <script>
-// Aggiornamento di DZ Auto alla 1.1.1 per Luca (13/11/2026): sostituire la cartella del plugin.
+// Aggiornamento di DZ Auto alla 2.0 per Luca (13/11/2026): sostituire la cartella, preset Automatico, prova su 20 foto.
 window.PRES = {
-  id: 'aggiorna-dzauto-111',
+  id: 'aggiorna-dzauto-200',
   marchio: 'DZ Auto · aggiornamento',
   vel: 1.2,
   tono: 0.85,
-  strumenti: ['voce', 'domande'],
+  strumenti: ['indice', 'voce', 'domande'],
   domande: { t: 'Scrivi domande o suggerimenti', href: 'https://milkbarandcoffe-web.github.io/dzauto-domande/' },
-  pronuncia: [['DZ Auto', 'Di Zeta Auto'], ['DZAuto.lrplugin', 'Di Zeta Auto punto lrplugin'], ['DZAuto.zip', 'Di Zeta Auto punto zip'], ['Lightroom', 'Lait rum'], ['plug-in', 'plag in'], ['Finder', 'Fainder'], ['1.1.1', 'uno uno uno'], ['Cmd', 'Comando']],
+  pronuncia: [['DZ Auto', 'Di Zeta Auto'], ['DZAuto.lrplugin', 'Di Zeta Auto punto lrplugin'], ['DZAuto.zip', 'Di Zeta Auto punto zip'], ['Lightroom', 'Lait rum'], ['plug-in', 'plag in'], ['Finder', 'Fainder'], ['2.0.0', 'due punto zero'], ['2.0', 'due punto zero'], ['Cmd', 'Comando'], ['Upright', 'Apràit'], ['iPhone', 'aifon']],
   inizio: {
-    t: 'DZ Auto 1.1.1',
-    x: 'Aggiornamento in due minuti. Alza il volume e tocca play.',
+    t: 'DZ Auto 2.0',
+    x: 'Il pannello che sistema il servizio da solo. Aggiornamento e prima prova in dieci minuti. Alza il volume e tocca play.',
     firma: 'idea e sviluppo by Daniel Zavan'
   },
   slide: [
-    { t: 'Ciao Luca!',
-      x: 'Ho corretto il problema di "Applica preset" (0 foto, 29 errori). Basta mettere il plugin nuovo al posto di quello vecchio: la chiave resta.',
-      v: 'Ciao Luca! Ho corretto il problema di Applica preset, quello delle zero foto e ventinove errori. Basta mettere il plugin nuovo al posto di quello vecchio. La chiave resta: non devi rimetterla.' },
+    { sez: 'Cosa cambia', t: 'Ciao Luca!',
+      x: 'Il preset è un clic: allora DZ Auto 2.0 fa il lavoro lungo. Apri il pannello, premi AVVIA, ti alzi.',
+      l: ['Il tuo stile, con la forza che vuoi', 'Bianco ed esposizione automatici', 'Foto storte raddrizzate', 'Bianco e nero con l\'etichetta Blu', 'Firma, raccolta, mail sull\'iPhone', 'Torna come prima: tutto com\'era'],
+      v: 'Ciao Luca! Hai ragione: il preset è un clic. Allora DZ Auto due punto zero fa il lavoro lungo. Apri il pannello, premi Avvia e ti alzi. Mette il tuo stile per ogni fotocamera, con la forza che scegli. Poi bianco ed esposizione automatici, foto per foto. Raddrizza le foto storte. Mette il bianco e nero sulle foto con l\'etichetta blu. Scrive la firma, raccoglie le foto in una raccolta da controllare e ti manda la mail sull\'iPhone. E se non ti piace, un comando, Torna come prima, rimette tutto com\'era.' },
 
-    { t: 'Dov\'è il plugin vecchio?',
-      n: ['Apri Lightroom Classic', 'Menu File > Gestione plug-in > DZ Auto', 'Nel riquadro Stato premi "Mostra nel Finder" (Show in Finder)', 'Si apre la cartella dove si trova DZAuto.lrplugin: lasciala aperta'],
+    { sez: 'Aggiorna', t: 'Dov\'è il plugin vecchio?',
+      n: ['Apri Lightroom Classic', 'Menu File > Gestione plug-in > DZ Auto', 'Nel riquadro Stato premi "Mostra nel Finder" (Show in Finder)', 'Si apre la cartella con DZAuto.lrplugin: lasciala aperta'],
       v: 'Prima cosa: troviamo il plugin vecchio. Apri Lightroom, menu File, Gestione plug-in, e seleziona DZ Auto. Nel riquadro Stato premi Mostra nel Finder. Si apre la cartella dove si trova il plugin: lasciala aperta.' },
 
-    { t: 'Chiudi Lightroom.',
+    { sez: 'Aggiorna', t: 'Chiudi Lightroom.',
       n: ['Menu Lightroom Classic > Esci (oppure Cmd+Q)', 'Aspetta che si chiuda del tutto'],
       v: 'Ora chiudi Lightroom: menu Lightroom Classic, Esci, oppure Comando Q. Aspetta che si chiuda del tutto.' },
 
-    { t: 'Prendi il plugin nuovo.',
-      n: ['Nella mail di Daniel apri l\'allegato DZAuto.zip', 'Oppure scaricalo con il tasto qui sotto', 'Il Mac apre lo zip: compare la cartella DZAuto.lrplugin'],
-      link: { t: 'Scarica DZ Auto 1.1.1 (Mac)', href: '../DZAuto.zip' },
-      v: 'Adesso prendi il plugin nuovo. È nell\'allegato della mail di Daniel, DZ Auto punto zip. Puoi anche scaricarlo con il tasto. Il Mac apre lo zip e compare la cartella DZ Auto punto lrplugin.' },
+    { sez: 'Aggiorna', t: 'Prendi il plugin nuovo.',
+      n: ['Tocca il tasto qui sotto (sul Mac)', 'Apri il file DZAuto.zip scaricato', 'Compare la cartella DZAuto.lrplugin'],
+      link: { t: 'Scarica DZ Auto 2.0 (Mac)', href: '../DZAuto.zip' },
+      v: 'Adesso prendi il plugin nuovo: sul Mac tocca il tasto e scarica DZ Auto punto zip. Aprilo: compare la cartella DZ Auto punto lrplugin.' },
 
-    { t: 'Sostituisci la cartella.',
-      n: ['Trascina la cartella nuova nella cartella aperta prima, quella del Finder', 'Il Mac chiede cosa fare: scegli Sostituisci', 'Deve restare una sola cartella DZAuto.lrplugin'],
-      v: 'Trascina la cartella nuova nella cartella che hai aperto prima con il Finder. Il Mac ti chiede cosa fare: scegli Sostituisci. Alla fine deve restare una sola cartella DZ Auto punto lrplugin.' },
+    { sez: 'Aggiorna', t: 'Sostituisci la cartella.',
+      n: ['Trascina la cartella nuova nella cartella aperta prima con il Finder', 'Il Mac chiede cosa fare: scegli Sostituisci', 'Deve restare una sola cartella DZAuto.lrplugin'],
+      x: 'È l\'ultima volta a mano: da adesso gli aggiornamenti si installano dal pannello.',
+      v: 'Trascina la cartella nuova nella cartella che hai aperto prima con il Finder. Il Mac ti chiede cosa fare: scegli Sostituisci. Deve restare una sola cartella. È l\'ultima volta che lo fai a mano: da adesso gli aggiornamenti si installano dal pannello.' },
 
-    { t: 'Riapri e controlla.',
-      n: ['Riapri Lightroom Classic', 'File > Gestione plug-in > DZ Auto', 'In basso deve esserci: "diagnostica (versione 1.1.1)"', 'La chiave c\'è ancora: non serve rimetterla'],
-      v: 'Riapri Lightroom. Vai di nuovo in Gestione plug-in, su DZ Auto. In basso deve esserci scritto: diagnostica, versione uno uno uno. La chiave c\'è ancora, non serve rimetterla.' },
+    { sez: 'Aggiorna', t: 'Riapri e controlla.',
+      n: ['Riapri Lightroom Classic', 'File > Gestione plug-in > DZ Auto', 'In basso: "diagnostica (versione 2.0.0)"', 'La chiave c\'è ancora: non serve rimetterla'],
+      v: 'Riapri Lightroom. In Gestione plug-in, su DZ Auto, in basso deve esserci scritto: diagnostica, versione due punto zero. La chiave c\'è ancora, non serve rimetterla.' },
 
-    { t: 'Riprova i preset.',
-      n: ['Seleziona 3 o 4 foto', 'File > Extra plug-in > DZ Auto: Applica preset', 'Scegli il preset per ogni fotocamera e premi Applica'],
-      v: 'Ora riprova i preset, prima su poche foto. Seleziona tre o quattro foto. Menu File, Extra plug-in, DZ Auto, Applica preset. Scegli il preset per ogni fotocamera e premi Applica.' },
+    { sez: 'Una volta sola', t: 'Crea il preset "Automatico".',
+      n: ['Sviluppo > pannello Preset > + > Crea preset', 'Nome: Automatico', 'In basso: "Nessuno" (Check None)', 'Spunta solo "Impostazioni automatiche" (Auto Settings)', 'Premi Crea'],
+      x: 'Serve per l\'esposizione automatica foto per foto. DZ Auto lo trova da solo.',
+      v: 'Adesso una cosa da fare una volta sola: il preset Automatico. Vai nel modulo Sviluppo. Nel pannello Preset, a sinistra, premi il più e scegli Crea preset. Come nome scrivi: Automatico. In basso premi Nessuno, così togli tutte le spunte. Poi spunta solo Impostazioni automatiche, e premi Crea. Serve per l\'esposizione automatica foto per foto, e DZ Auto lo trova da solo.' },
 
-    { t: 'Se qualcosa non va.', fine: true,
-      x: 'Fai una foto alla finestra e mandala a Daniel: adesso il messaggio mostra anche il primo errore, così capiamo subito.',
-      link: { t: 'Scrivi domande o suggerimenti', href: 'https://milkbarandcoffe-web.github.io/dzauto-domande/', nuova: true },
-      v: 'Se compare ancora un errore, niente paura. Fai una foto alla finestra e mandala a Daniel: adesso il messaggio mostra anche il primo errore, così capiamo subito cosa succede. Grazie Luca, e buon lavoro!' }
+    { sez: 'Prima prova', t: 'Apri il pannello.',
+      n: ['Apri un servizio già importato', 'Se vuoi il bianco e nero: etichetta Blu (tasto 9) su qualche foto', 'File > Extra plug-in > DZ Auto: Pannello'],
+      v: 'Ora la prima prova. Apri un servizio già importato. Se vuoi provare anche il bianco e nero, metti l\'etichetta blu, tasto nove, su qualche foto. Poi menu File, Extra plug-in, DZ Auto Pannello.' },
+
+    { sez: 'Prima prova', t: 'Fai le tue scelte.',
+      n: ['Scheda Colore: il preset per la D850 e per la Z6 II, forza 100%', 'Controlla che "Automatico" sia scelto', 'Scheda Bianco e nero: spunta, etichetta Blu, preset "Area bn"', 'Scheda Altro: firma e copyright, se non ci sono'],
+      v: 'Fai le tue scelte. Nella scheda Colore scegli il preset per la D850 e per la Zeta 6 seconda, con la forza al cento per cento. Controlla che il preset Automatico sia scelto. Nella scheda Bianco e nero spunta la voce, lascia l\'etichetta blu e scegli Area bn. Nella scheda Altro controlla firma e copyright.' },
+
+    { sez: 'Prima prova', t: 'Prova su 20 foto.',
+      n: ['Premi "Prova su 20 foto"', 'Aspetta la finestra "DZ Auto: prova finita"', 'Fai una foto alla finestra e mandala a Daniel', 'Guarda le foto nella raccolta DZ Auto > data prova'],
+      x: 'La riga "Controllo" dice se Lightroom ha preso raddrizza, bianco ed esposizione. Ci serve per essere sicuri.',
+      v: 'Adesso premi Prova su venti foto. DZ Auto lavora su venti foto sparse, e alla fine compare la finestra Prova finita. Fai una foto alla finestra e mandala a Daniel: la riga Controllo ci dice se Lightroom ha preso raddrizza, bianco ed esposizione. Poi guarda le foto nella raccolta DZ Auto.' },
+
+    { sez: 'Prima prova', t: 'Ti piace? Non ti piace?',
+      l: ['Ti piace: apri il pannello e premi AVVIA. Le foto della prova non vengono lavorate due volte', 'Non ti piace: File > Extra plug-in > DZ Auto: Torna come prima. Poi cambia le scelte e riprova'],
+      v: 'Ti piace? Apri il pannello e premi Avvia, e puoi alzarti: alla fine arriva la mail. Le foto della prova non vengono lavorate due volte. Non ti piace? Menu File, Extra plug-in, DZ Auto Torna come prima: tutto torna com\'era. Poi cambia le scelte e riprova.' },
+
+    { sez: 'Aiuto', t: 'Tutto il resto.', fine: true,
+      x: 'La guida completa è aggiornata: pannello, schede, aggiornamenti. Per domande o idee usa il tasto qui sotto.',
+      link: { t: 'Apri la guida completa', href: '../guida/' },
+      v: 'Tutto il resto è nella guida completa, già aggiornata: il pannello, le schede e gli aggiornamenti. Per domande o idee usa il tasto Domande, in basso. Grazie Luca, e buon lavoro!' }
   ]
 };
 </script>
