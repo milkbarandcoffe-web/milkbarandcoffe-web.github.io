@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0E1A2B">
+<title>DZ Auto aggiornamento</title>
+<meta name="description" content="Guida parlata: aggiornare il plugin DZ Auto alla versione 1.1.1.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../presenta/stile.css">
+<style>
+:root{--fondo:#0E1A2B;--fondo2:#17304D;--carta:#EAF2FB;--tenue:#9FB4CC;--accento:#5AB0FF;--su-accento:#06182B;--linea:rgba(234,242,251,.16)}
+</style>
+</head>
+<body>
+<noscript>Per ascoltare la guida serve JavaScript attivo.</noscript>
+<script>
+// Aggiornamento di DZ Auto alla 1.1.1 per Luca (13/11/2026): sostituire la cartella del plugin.
+window.PRES = {
+  id: 'aggiorna-dzauto-111',
+  marchio: 'DZ Auto · aggiornamento',
+  vel: 1.2,
+  tono: 0.85,
+  strumenti: ['voce', 'domande'],
+  domande: { t: 'Scrivi domande o suggerimenti', href: 'https://milkbarandcoffe-web.github.io/dzauto-domande/' },
+  pronuncia: [['DZ Auto', 'Di Zeta Auto'], ['DZAuto.lrplugin', 'Di Zeta Auto punto lrplugin'], ['DZAuto.zip', 'Di Zeta Auto punto zip'], ['Lightroom', 'Lait rum'], ['plug-in', 'plag in'], ['Finder', 'Fainder'], ['1.1.1', 'uno uno uno'], ['Cmd', 'Comando']],
+  inizio: {
+    t: 'DZ Auto 1.1.1',
+    x: 'Aggiornamento in due minuti. Alza il volume e tocca play.',
+    firma: 'idea e sviluppo by Daniel Zavan'
+  },
+  slide: [
+    { t: 'Ciao Luca!',
+      x: 'Ho corretto il problema di "Applica preset" (0 foto, 29 errori). Basta mettere il plugin nuovo al posto di quello vecchio: la chiave resta.',
+      v: 'Ciao Luca! Ho corretto il problema di Applica preset, quello delle zero foto e ventinove errori. Basta mettere il plugin nuovo al posto di quello vecchio. La chiave resta: non devi rimetterla.' },
+
+    { t: 'Dov\'è il plugin vecchio?',
+      n: ['Apri Lightroom Classic', 'Menu File > Gestione plug-in > DZ Auto', 'Nel riquadro Stato premi "Mostra nel Finder" (Show in Finder)', 'Si apre la cartella dove si trova DZAuto.lrplugin: lasciala aperta'],
+      v: 'Prima cosa: troviamo il plugin vecchio. Apri Lightroom, menu File, Gestione plug-in, e seleziona DZ Auto. Nel riquadro Stato premi Mostra nel Finder. Si apre la cartella dove si trova il plugin: lasciala aperta.' },
+
+    { t: 'Chiudi Lightroom.',
+      n: ['Menu Lightroom Classic > Esci (oppure Cmd+Q)', 'Aspetta che si chiuda del tutto'],
+      v: 'Ora chiudi Lightroom: menu Lightroom Classic, Esci, oppure Comando Q. Aspetta che si chiuda del tutto.' },
+
+    { t: 'Prendi il plugin nuovo.',
+      n: ['Nella mail di Daniel apri l\'allegato DZAuto.zip', 'Oppure scaricalo con il tasto qui sotto', 'Il Mac apre lo zip: compare la cartella DZAuto.lrplugin'],
+      link: { t: 'Scarica DZ Auto 1.1.1 (Mac)', href: '../DZAuto.zip' },
+      v: 'Adesso prendi il plugin nuovo. È nell\'allegato della mail di Daniel, DZ Auto punto zip. Puoi anche scaricarlo con il tasto. Il Mac apre lo zip e compare la cartella DZ Auto punto lrplugin.' },
+
+    { t: 'Sostituisci la cartella.',
+      n: ['Trascina la cartella nuova nella cartella aperta prima, quella del Finder', 'Il Mac chiede cosa fare: scegli Sostituisci', 'Deve restare una sola cartella DZAuto.lrplugin'],
+      v: 'Trascina la cartella nuova nella cartella che hai aperto prima con il Finder. Il Mac ti chiede cosa fare: scegli Sostituisci. Alla fine deve restare una sola cartella DZ Auto punto lrplugin.' },
+
+    { t: 'Riapri e controlla.',
+      n: ['Riapri Lightroom Classic', 'File > Gestione plug-in > DZ Auto', 'In basso deve esserci: "diagnostica (versione 1.1.1)"', 'La chiave c\'è ancora: non serve rimetterla'],
+      v: 'Riapri Lightroom. Vai di nuovo in Gestione plug-in, su DZ Auto. In basso deve esserci scritto: diagnostica, versione uno uno uno. La chiave c\'è ancora, non serve rimetterla.' },
+
+    { t: 'Riprova i preset.',
+      n: ['Seleziona 3 o 4 foto', 'File > Extra plug-in > DZ Auto: Applica preset', 'Scegli il preset per ogni fotocamera e premi Applica'],
+      v: 'Ora riprova i preset, prima su poche foto. Seleziona tre o quattro foto. Menu File, Extra plug-in, DZ Auto, Applica preset. Scegli il preset per ogni fotocamera e premi Applica.' },
+
+    { t: 'Se qualcosa non va.', fine: true,
+      x: 'Fai una foto alla finestra e mandala a Daniel: adesso il messaggio mostra anche il primo errore, così capiamo subito.',
+      link: { t: 'Scrivi domande o suggerimenti', href: 'https://milkbarandcoffe-web.github.io/dzauto-domande/', nuova: true },
+      v: 'Se compare ancora un errore, niente paura. Fai una foto alla finestra e mandala a Daniel: adesso il messaggio mostra anche il primo errore, così capiamo subito cosa succede. Grazie Luca, e buon lavoro!' }
+  ]
+};
+</script>
+<script src="../../presenta/motore.js"></script>
+</body>
+</html>
