@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Prova distribuzione</title>
+<meta name="theme-color" content="#0d1117">
+<style>
+body{margin:0;background:#0d1117;color:#e6edf3;font:16px/1.5 system-ui,-apple-system,sans-serif;padding:20px 16px calc(28px + env(safe-area-inset-bottom))}
+h1{font-size:24px;margin:0 0 4px}
+h2{font-size:18px;margin:0 0 6px}
+.sub{color:#9da7b3;margin:0 0 16px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:14px;padding:14px;margin:0 0 12px}
+.card p{margin:0 0 8px;color:#c9d1d9}
+ol{margin:6px 0 0;padding-left:22px;color:#c9d1d9}
+li{margin:4px 0}
+b.g{color:#58a6ff}
+a.bt,button{display:block;width:100%;box-sizing:border-box;border:0;border-radius:26px;padding:15px;margin:10px 0 0;font:700 16px system-ui,sans-serif;text-align:center;text-decoration:none;color:#fff;background:#0d6efd}
+.sec{background:#30363d!important}
+.tab{display:flex;gap:8px;margin:8px 0 0}
+.tab button{margin:0;padding:10px;font-size:14px;background:#30363d}
+.tab button.on{background:#0d6efd}
+.nota{font-size:14px;color:#9da7b3}
+.tel{display:inline-block;padding:2px 10px;border-radius:12px;background:#30363d;font-size:14px}
+</style>
+</head>
+<body>
+<h1>Prova distribuzione</h1>
+<p class="sub">Banco di prova: permessi, installazione, iPhone e Android. <span class="tel" id="tel"></span></p>
+
+<div class="card">
+<h2>Prima di iniziare</h2>
+<p><b>Cosa sono i permessi.</b> L'app lavora nel tuo account Google: per esempio salva i dati in un foglio nel tuo Drive. Per questo Google chiede a te se va bene.</p>
+<p><b>Perché li chiediamo.</b> I dati restano tuoi, nel tuo Drive: noi non li vediamo. Chiediamo solo quello che serve all'app.</p>
+<p><b>Perché le app famose sono più semplici.</b> Le grandi aziende pagano Google per far verificare le loro app, e per l'accesso completo a Drive o Gmail rifanno ogni anno un controllo di sicurezza a pagamento. Le nostre app sono fatte su misura e non passano da questa verifica: per questo Google mostra un avviso. Non vuol dire che l'app è pericolosa.</p>
+</div>
+
+<div class="card">
+<h2>Cosa vedrai</h2>
+<div class="tab"><button id="tA" class="on" onclick="mostra('A')">PROVA A</button><button id="tB" onclick="mostra('B')">PROVA B</button></div>
+<ol id="passiA">
+<li>Scegli il tuo account Google.</li>
+<li>Google mostra cosa chiede l'app: solo i file che l'app crea e il tuo indirizzo email.</li>
+<li>Lascia tutte le caselle spuntate e premi <b class="g">Continua</b>.</li>
+</ol>
+<ol id="passiB" style="display:none">
+<li>Scegli il tuo account Google.</li>
+<li>Compare <b>"Google non ha verificato questa app"</b>: è l'avviso di cui sopra.</li>
+<li>Tocca <b class="g">Avanzate</b> (scritta piccola in basso).</li>
+<li>Tocca <b class="g">Vai a ... (non sicura)</b>.</li>
+<li>Lascia <b>tutte</b> le caselle spuntate (o tocca <b class="g">Seleziona tutto</b>) e premi <b class="g">Continua</b>.</li>
+</ol>
+<p class="nota" style="margin-top:8px">Se togli per sbaglio una spunta, l'app te lo dice e ti fa dare solo il permesso mancante.</p>
+<button class="sec" id="ascolta" onclick="ascolta()">ASCOLTA LA SPIEGAZIONE</button>
+</div>
+
+<div class="card">
+<h2>Le prove</h2>
+<p><b>A</b> = permessi semplici (solo i file dell'app). <b>B</b> = permessi classici, come le app di oggi.</p>
+<a class="bt" id="vaiA" href="#">APRI LA PROVA A</a>
+<a class="bt sec" id="vaiB" href="#">APRI LA PROVA B</a>
+<p class="nota" id="dopo" style="margin-top:10px"></p>
+</div>
+
+<div class="card">
+<h2>Da annotare</h2>
+<ol>
+<li>Prova A: compare "Google non ha verificato questa app"? (sì/no)</li>
+<li>Prova B: quante schermate fino all'app?</li>
+<li>Prova B: togli apposta una spunta. Compare "Manca un permesso" e il tasto funziona?</li>
+<li>Tasto SCRIVI UNA RIGA: OK in A e in B? Il foglio è nel tuo Drive?</li>
+<li>Android: INSTALLA COME APP → INSTALLA. L'app dall'icona si apre? Il riquadro dice "dentro la PWA"?</li>
+<li>iPhone: Condividi → Aggiungi alla schermata Home. Dall'icona: senza barra di Safari? Chiede di nuovo l'accesso?</li>
+</ol>
+</div>
+
+<script>
+var URL_A='https://script.google.com/macros/s/AKfycbyAh-bMW8eDfsDe_l0dtvwUUSHK2R9ryDcCPxMD4zuZAL_UxYPTpTUh4biczE_Ell--yA/exec', URL_B='https://script.google.com/macros/s/AKfycby3cNpYQFIr5bJW2tXbdS1SO_KmX-ulVRcWG9jBptgg_Hc2SS0JIqthqVKd69Vkdq3N/exec';
+var UA=navigator.userAgent, IOS=/iPhone|iPad|iPod/.test(UA)||(/Macintosh/.test(UA)&&navigator.maxTouchPoints>1), AND=/Android/.test(UA);
+document.getElementById('tel').textContent=IOS?'iPhone':(AND?'Android':'computer');
+document.getElementById('vaiA').href=URL_A; document.getElementById('vaiB').href=URL_B;
+document.getElementById('dopo').innerHTML=IOS
+ ? 'Dopo i permessi l\'app si apre qui in Safari. Per averla come app: tocca <b>Condividi</b> e poi <b>Aggiungi alla schermata Home</b>.'
+ : 'Dopo i permessi l\'app si apre e ti chiede come usarla: <b>INSTALLA COME APP</b> o <b>RESTA NEL BROWSER</b>.';
+function mostra(v){document.getElementById('passiA').style.display=v==='A'?'':'none';document.getElementById('passiB').style.display=v==='B'?'':'none';document.getElementById('tA').className=v==='A'?'on':'';document.getElementById('tB').className=v==='B'?'on':'';}
+var parla=false;
+function ascolta(){
+  var s=window.speechSynthesis,b=document.getElementById('ascolta');
+  if(!s){b.textContent='Voce non disponibile qui';return;}
+  if(parla){s.cancel();parla=false;b.textContent='ASCOLTA LA SPIEGAZIONE';return;}
+  var t=Array.prototype.map.call(document.querySelectorAll('.card:nth-of-type(1) p, #passiB li'),function(e){return e.textContent;}).join(' ');
+  var u=new SpeechSynthesisUtterance(t);u.lang='it-IT';u.rate=1.1;
+  var v=s.getVoices().filter(function(x){return /^it/i.test(x.lang);})[0];if(v)u.voice=v;
+  u.onend=function(){parla=false;b.textContent='ASCOLTA LA SPIEGAZIONE';};
+  s.cancel();s.speak(u);parla=true;b.textContent='FERMA LA VOCE';
+}
+</script>
+</body>
+</html>
