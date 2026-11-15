@@ -12,34 +12,68 @@
 <meta name="apple-mobile-web-app-title" content="Prova A">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
-html,body{margin:0;height:100%;overflow:hidden;background:#0d1117}
-#app{position:fixed;top:0;left:0;width:100%;height:100%;border:0;display:block;background:#0d1117}
-#ins{position:fixed;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:9;display:none;align-items:center;gap:10px;padding:0 6px 0 18px;height:46px;border-radius:23px;background:#0d6efd;color:#fff;font:700 15px system-ui,-apple-system,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.45)}
-#ins b{cursor:pointer}#ins i{font-style:normal;display:inline-block;width:34px;height:34px;line-height:34px;text-align:center;border-radius:17px;background:rgba(255,255,255,.22);cursor:pointer}
-#ios{position:fixed;left:10px;right:10px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:9;display:none;padding:14px 46px 14px 16px;border-radius:14px;background:#0d6efd;color:#fff;font:15px/1.35 system-ui,-apple-system,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.45)}
-#ios i{font-style:normal;position:absolute;right:8px;top:50%;margin-top:-17px;width:34px;height:34px;line-height:34px;text-align:center;border-radius:17px;background:rgba(255,255,255,.22)}
-#ok{position:fixed;left:10px;right:10px;top:calc(12px + env(safe-area-inset-top));z-index:9;display:none;padding:14px 16px;border-radius:14px;background:#2da44e;color:#fff;text-align:center;font:600 15px/1.35 system-ui,-apple-system,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.45)}
+html,body{margin:0;height:100%;background:#0d1117;color:#e6edf3;font:16px/1.45 system-ui,-apple-system,sans-serif}
+#app{position:fixed;top:0;left:0;width:100%;height:100%;border:0;display:none;background:#0d1117}
+#porta{min-height:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:28px 22px calc(28px + env(safe-area-inset-bottom));text-align:center}
+#porta img{width:112px;height:112px;border-radius:26px;box-shadow:0 6px 22px rgba(0,0,0,.5)}
+h1{margin:4px 0 0;font-size:26px}
+.sub{margin:0;color:#9da7b3}
+.bt{display:block;width:280px;max-width:100%;box-sizing:border-box;border:0;border-radius:30px;padding:18px;font:700 18px system-ui,-apple-system,sans-serif;color:#fff;background:#0d6efd;text-align:center;text-decoration:none;cursor:pointer}
+.bt.verde{background:#2da44e}
+.msg{max-width:320px;color:#c9d1d9}
+.link{color:#9da7b3;font-size:14px;text-decoration:underline;background:none;border:0;padding:6px;cursor:pointer;font-family:inherit}
+.blocco{display:none;flex-direction:column;align-items:center;gap:14px}
 </style>
 </head><body>
-<iframe id="app" src="https://script.google.com/macros/s/AKfycbyAh-bMW8eDfsDe_l0dtvwUUSHK2R9ryDcCPxMD4zuZAL_UxYPTpTUh4biczE_Ell--yA/exec#pwa=1" title="Prova A" allow="clipboard-read; clipboard-write; fullscreen; geolocation; microphone; camera; autoplay; screen-wake-lock" allowfullscreen></iframe>
-<div id="ins"><b id="insb">INSTALLA</b><i id="insx">&#10005;</i></div>
-<div id="ok">App installata: la trovi anche nella schermata Home.</div>
-<div id="ios">Per installare: tocca <b>Condividi</b> e poi <b>Aggiungi alla schermata Home</b>.<i id="iosx">&#10005;</i></div>
+<div id="porta">
+<img src="icon-192.png" alt="">
+<h1>Prova A</h1>
+<p class="sub">App di prova di Daniel</p>
+
+<div class="blocco" id="android">
+<button class="bt" id="insb" type="button">INSTALLA</button>
+<p class="msg" id="attesa">Preparo l'installazione...</p>
+</div>
+
+<div class="blocco" id="ios">
+<p class="msg">Per installare: tocca <b>Condividi</b> e poi <b>Aggiungi alla schermata Home</b>. Poi apri l'app dall'icona.</p>
+</div>
+
+<div class="blocco" id="fatta">
+<p class="msg"><b>App installata.</b><br>Clicca su CHIUDI, poi apri l'app con l'icona che troverai nella schermata Home.</p>
+<button class="bt verde" id="chiudi" type="button">CHIUDI</button>
+<p class="msg" id="nochiude" style="display:none">Il browser non mi lascia chiudere questa pagina: chiudila tu con il tasto <b>Indietro</b>, poi apri l'icona nella schermata Home.</p>
+</div>
+
+<button class="link" id="senza" type="button">Continua senza installare</button>
+</div>
+<iframe id="app" title="Prova A" allow="clipboard-read; clipboard-write; fullscreen; geolocation; microphone; camera; autoplay; screen-wake-lock" allowfullscreen></iframe>
 <script>
 (function(){
-var inst=window.matchMedia("(display-mode: standalone)").matches||window.matchMedia("(display-mode: fullscreen)").matches||window.navigator.standalone===true;
+// Prova A, pagina d'installazione (15/11): nel browser solo INSTALLA (niente app, quindi niente permessi Google);
+// dall'icona (schermo intero / standalone) carica l'app.
+var APP='https://script.google.com/macros/s/AKfycbyAh-bMW8eDfsDe_l0dtvwUUSHK2R9ryDcCPxMD4zuZAL_UxYPTpTUh4biczE_Ell--yA/exec#pwa=1';
 function g(i){return document.getElementById(i);}
-function mem(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){}return null;}
-if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){});}
-var dp=null;
-window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;if(!inst)g("ins").style.display="flex";});
-var fatto=false;
-function installata(){if(fatto)return;fatto=true;dp=null;g("ins").style.display="none";g("ok").style.display="block";setTimeout(function(){g("ok").style.display="none";},6000);setTimeout(function(){var f=g("app");f.src=f.getAttribute("src");},800);}
-g("insb").onclick=function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(r){if(r&&r.outcome==="accepted")installata();else{dp=null;g("ins").style.display="none";}},function(){});};
-g("insx").onclick=function(){g("ins").style.display="none";};
-window.addEventListener("appinstalled",installata);
-var ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
-if(ios&&!inst&&mem("pwa-ios-no")!=="1")g("ios").style.display="block";
-g("iosx").onclick=function(){g("ios").style.display="none";mem("pwa-ios-no","1");};
+function vedi(i,s){g(i).style.display=s||'flex';}
+function nascondi(i){g(i).style.display='none';}
+var installata=window.matchMedia('(display-mode: standalone)').matches||window.matchMedia('(display-mode: fullscreen)').matches||window.navigator.standalone===true;
+var ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}
+function apriApp(){nascondi('porta');var f=g('app');f.src=APP;f.style.display='block';}
+if(installata){apriApp();return;}
+g('senza').onclick=apriApp;
+if(ios){vedi('ios');return;}
+vedi('android');nascondi('insb');
+var dp=null,fatto=false;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;nascondi('attesa');vedi('insb','block');});
+setTimeout(function(){if(!dp&&!fatto)g('attesa').innerHTML='Se l\'app è già installata, aprila dall\'icona nella schermata Home.';},4000);
+function fine(){if(fatto)return;fatto=true;dp=null;nascondi('android');nascondi('senza');vedi('fatta');}
+g('insb').onclick=function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(r){if(r&&r.outcome==='accepted')fine();},function(){});};
+window.addEventListener('appinstalled',fine);
+g('chiudi').onclick=function(){
+  try{window.close();}catch(e){}
+  // Se il browser non la chiude (pagina aperta a mano), lo dico.
+  setTimeout(function(){g('nochiude').style.display='block';},500);
+};
 })();
 </script></body></html>
