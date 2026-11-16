@@ -1,6 +1,6 @@
 /* Presentazioni parlate DZ: motore comune.
    La pagina definisce window.PRES = { id, marchio, vel, tono, audio:{src,t:[inizio di ogni slide in secondi]}, etichette:{tu,ai}, inizio:{t,x,chat,firma}, slide:[...], wa }
-   Slide: t titolo, x testo, l punti, n passi numerati, chat [{da:'tu'|'ai', t}], chiave true, fine true, link {t,href}, v testo letto.
+   Slide: t titolo, x testo, img immagine (alt = testo alternativo), l punti, n passi numerati, chat [{da:'tu'|'ai', t}], chiave true, fine true, link {t,href}, v testo letto.
    {NOME} nel testo = ", Nome" se l'indirizzo ha ?nome=Nome. ?tel=39... aggiunge WhatsApp alla fine. */
 (function () {
   'use strict';
@@ -89,6 +89,7 @@
     if (d.chiave) s.insertAdjacentHTML('beforeend', CHIAVE);
     s.appendChild(el('h1', '', nm(d.t)));
     if (d.x) s.appendChild(el('p', 'testo', nm(d.x)));
+    if (d.img) { var im = el('img', 'foto'); im.src = d.img; im.alt = d.alt || ''; s.appendChild(im); }
     if (d.l || d.n) {
       var ul = el(d.n ? 'ol' : 'ul');
       (d.n || d.l).forEach(function (t) { ul.appendChild(el('li', '', t)); });
