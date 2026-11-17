@@ -1,11 +1,11 @@
 <!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><title>Il mio listino - Pasticceria Zavan</title><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#e65100">
 <script>
-// Pagina "Il mio listino" dei camerieri: passa il codice personale (?c=...) all'app IPRATICO-X.
+// Pagina "Il mio listino" dei camerieri: passa il codice personale (?k=..., accetta anche il vecchio ?c=) all'app IPRATICO-X.
 var APP = "https://script.google.com/macros/s/AKfycbz4sH8OP9QoO1HsjarU0Z8un3_zHFqjG7j4NjavE1UE9WqbMgxSQxzS3-eEMslb7_Im/exec";
-var c = (new URLSearchParams(location.search).get("c") || "").replace(/[^A-Za-z0-9]/g, "");
-if (c) location.replace(APP + "?c=" + c);
+var u = new URLSearchParams(location.search), c = (u.get("k") || u.get("c") || "").replace(/[^A-Za-z0-9]/g, "");
+if (c) location.replace(APP + "?k=" + c);
 </script>
 <style>body{font:18px system-ui,sans-serif;padding:24px;color:#222}a{display:inline-block;background:#e65100;color:#fff;padding:14px 20px;border-radius:12px;text-decoration:none;font-weight:bold}</style>
 </head><body><p><b>Il mio listino</b></p><p id="m">Apro il tuo listino...</p>
-<script>if (!c) document.getElementById("m").textContent = "Link incompleto: apri il link che ti è arrivato per mail."; else document.write('<p><a href="' + APP + '?c=' + c + '">Apri il mio listino</a></p>');</script>
+<script>if (!c) document.getElementById("m").textContent = "Link incompleto: apri il link che ti è arrivato per mail."; else document.write('<p><a href="' + APP + '?k=' + c + '">Apri il mio listino</a></p>');</script>
 </body></html>
