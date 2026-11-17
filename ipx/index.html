@@ -1,1 +1,13 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>IPRATICO-X</title><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=https://script.google.com/macros/s/AKfycbz4sH8OP9QoO1HsjarU0Z8un3_zHFqjG7j4NjavE1UE9WqbMgxSQxzS3-eEMslb7_Im/exec"><script>location.replace("https://script.google.com/macros/s/AKfycbz4sH8OP9QoO1HsjarU0Z8un3_zHFqjG7j4NjavE1UE9WqbMgxSQxzS3-eEMslb7_Im/exec")</script></head><body><a href="https://script.google.com/macros/s/AKfycbz4sH8OP9QoO1HsjarU0Z8un3_zHFqjG7j4NjavE1UE9WqbMgxSQxzS3-eEMslb7_Im/exec">Apri IPRATICO-X</a></body></html>
+<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><title>IPRATICO-X</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#e65100">
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icona-192.png"><link rel="apple-touch-icon" href="icona-192.png">
+<style>html,body{margin:0;height:100%;background:#e65100;overflow:hidden}iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#fff}
+#x{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font:700 22px system-ui,sans-serif}</style></head>
+<body><div id="x">IPRATICO-X…</div>
+<script>
+// App installabile: dentro apre IPRATICO-X (Apps Script). Se il riquadro non funziona: ?diretto=1 apre la pagina normale.
+var APP = "https://script.google.com/macros/s/AKfycbz4sH8OP9QoO1HsjarU0Z8un3_zHFqjG7j4NjavE1UE9WqbMgxSQxzS3-eEMslb7_Im/exec";
+if (/diretto=1/.test(location.search)) location.replace(APP);
+else { var f = document.createElement('iframe'); f.src = APP; f.allow = "clipboard-write"; document.body.appendChild(f); }
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
+</script></body></html>
