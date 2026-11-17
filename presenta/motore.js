@@ -73,8 +73,8 @@
   function inizio() {
     var d = P.inizio || {}, s = g('slide');
     s.className = 'slide inizio'; s.innerHTML = '';
-    s.appendChild(el('h1', '', d.t || ''));
-    if (d.x) s.appendChild(el('p', 'testo', d.x));
+    s.appendChild(el('h1', '', nm(d.t || '')));
+    if (d.x) s.appendChild(el('p', 'testo', nm(d.x)));
     if (d.chat) chat(d.chat, s);
     if (d.firma) s.appendChild(el('p', 'piccolo', d.firma));
     g('prima').classList.add('nascosto'); g('dopo').classList.remove('nascosto');
