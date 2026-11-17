@@ -1,11 +1,7 @@
-<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><title>Il mio listino - Pasticceria Zavan</title><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#e65100">
-<script>
-// Pagina "Il mio listino" dei camerieri: passa il codice personale (?k=..., accetta anche il vecchio ?c=) all'app IPRATICO-X.
-var APP = "https://script.google.com/macros/s/AKfycbz4sH8OP9QoO1HsjarU0Z8un3_zHFqjG7j4NjavE1UE9WqbMgxSQxzS3-eEMslb7_Im/exec";
-var u = new URLSearchParams(location.search), c = (u.get("k") || u.get("c") || "").replace(/[^A-Za-z0-9]/g, "");
-if (c) location.replace(APP + "?k=" + c);
-</script>
-<style>body{font:18px system-ui,sans-serif;padding:24px;color:#222}a{display:inline-block;background:#e65100;color:#fff;padding:14px 20px;border-radius:12px;text-decoration:none;font-weight:bold}</style>
-</head><body><p><b>Il mio listino</b></p><p id="m">Apro il tuo listino...</p>
-<script>if (!c) document.getElementById("m").textContent = "Link incompleto: apri il link che ti è arrivato per mail."; else document.write('<p><a href="' + APP + '?k=' + c + '">Apri il mio listino</a></p>');</script>
-</body></html>
+<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><title>Il mio listino</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#e65100"><meta name="robots" content="noindex,nofollow">
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icona-192.png"><link rel="apple-touch-icon" href="icona-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Il mio listino"></head>
+<body><script>// Pagina "Il mio listino" dei camerieri. Il codice personale (?k=, accetta anche il vecchio ?c=) resta salvato sul telefono per l'app installata.
+window.APPX = {id: 'mio', nome: 'Il mio listino', url: 'https://script.google.com/macros/s/AKfycbz4sH8OP9QoO1HsjarU0Z8un3_zHFqjG7j4NjavE1UE9WqbMgxSQxzS3-eEMslb7_Im/exec', colore: '#e65100', param: 'k'};</script>
+<script src="../pwa/guscio.js"></script></body></html>
