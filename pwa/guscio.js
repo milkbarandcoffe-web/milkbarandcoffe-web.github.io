@@ -1,10 +1,10 @@
 /* Guscio app installabile (PWA) per le app Apps Script di Daniel Zavan.
-   Uso in index.html:  window.APPX = {id:'ipx', nome:'IPRATICO-X', url:'https://script.google.com/.../exec', colore:'#e65100', param:'k'(facoltativo)};
+   Uso in index.html:  window.APPX = {id:'ipx', nome:'IPRATICO-X', url:'https://script.google.com/.../exec', colore:'#e65100', param:'k'(facoltativo), su:'#3e2c00' (testo sopra il colore, facoltativo, se il colore e chiaro), scritta:'#c25e00' (testo colorato su bianco, facoltativo)};
    poi <script src="../pwa/guscio.js"></script>. Accanto servono manifest.json, sw.js, icona-192.png, icona-512.png (copia da pwa/modello/).
    Flusso: aperta nel browser -> guida per installare (Android: INSTALLA o menu ⋮; iPhone: Condividi -> Aggiungi a Home).
    Installata -> "riaprila dall'icona" -> OK chiude. Aperta dall'icona -> apre l'app (iframe a tutto schermo). */
 (function () {
-  var A = window.APPX || {}, C = A.colore || '#e65100', D = document, LS = window.localStorage;
+  var A = window.APPX || {}, C = A.colore || '#e65100', SU = A.su || '#fff', CT = A.scritta || C, D = document, LS = window.localStorage;
   var ua = navigator.userAgent, ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && 'ontouchend' in D);
   var android = /Android/.test(ua), safari = ios && !/CriOS|FxiOS|EdgiOS/.test(ua);
   var solo = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
@@ -23,9 +23,9 @@
     'iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#fff}' +
     '#g{min-height:100%;background:#fff;box-sizing:border-box;padding:20px 18px 40px;max-width:560px;margin:0 auto}' +
     '#g .top{display:flex;align-items:center;gap:14px;margin-bottom:10px}#g .top img{width:64px;height:64px;border-radius:16px}' +
-    '#g h1{font-size:24px;margin:0;color:' + C + '}#g h2{color:' + C + '}#g ol{padding-left:22px;line-height:1.5}#g li{margin:10px 0}' +
+    '#g h1{font-size:24px;margin:0;color:' + CT + '}#g h2{color:' + CT + '}#g ol{padding-left:22px;line-height:1.5}#g li{margin:10px 0}' +
     '#g .b{display:block;width:100%;box-sizing:border-box;text-align:center;font-size:19px;font-weight:700;border-radius:14px;padding:16px;margin:12px 0;border:2px solid ' + C + ';cursor:pointer;text-decoration:none}' +
-    '#g .p{background:' + C + ';color:#fff}#g .s{background:#fff;color:' + C + '}#g .k{display:inline-block;border:1px solid #bbb;border-radius:8px;padding:0 8px;font-weight:700;background:#f5f5f5}' +
+    '#g .p{background:' + C + ';color:' + SU + '}#g .s{background:#fff;color:' + CT + '}#g .k{display:inline-block;border:1px solid #bbb;border-radius:8px;padding:0 8px;font-weight:700;background:#f5f5f5}' +
     '#g .box{background:#fff3e0;border-radius:12px;padding:12px;margin:12px 0}#g small{color:#777}';
   D.head.appendChild(css);
   function scrivi(h) { D.body.innerHTML = '<div id="g">' + h + '</div>'; }
