@@ -17,3 +17,6 @@ Un'app Apps Script non si può installare da sola (gira dentro una pagina di Goo
 App esistenti: `ipx/` (IPRATICO-X), `mio/` (Il mio listino dei camerieri, `param: 'k'`), `mpx/` (MAGICPRINT-X, celeste #0288d1, `param: 'k'`), `ox/` (ORDINI-X, giallo #f9a825, `param: 'k'`, testo scuro).
 
 Regola della suite: ogni app nuova ha il suo guscio qui dal giorno in cui nasce (elenco in `gas-codice/SUITE/gusci.json`).
+
+## Chiave sbagliata dentro il guscio (25/11/2026)
+Se la pagina dell app chiede la chiave e si preme ENTRA, la pagina manda la chiave al guscio (`postMessage {appx:'chiave', k}` verso questo sito). Il guscio la accetta solo da pagine Google (googleusercontent.com / script.google.com), la salva (`appx_ID_tok`) e riapre l app nell iframe: non si esce dalla cornice. Lo fanno ORDINI-X 0.5 e MAGICPRINT-X 4.14 (`goto`).

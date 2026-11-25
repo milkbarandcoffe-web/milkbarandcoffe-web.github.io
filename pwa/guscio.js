@@ -55,5 +55,16 @@
   window.APPX_ins = function () { if (!dP) return; dP.prompt(); dP.userChoice.then(function (r) { if (r.outcome === 'accepted') fatto(); dP = null; }); };
   window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); dP = e; mostraBottone(); });
   window.addEventListener('appinstalled', fatto);
+  // Chiave nuova dalla pagina dell'app (ENTRA dopo una chiave sbagliata): solo dalle pagine Google (iframe dell'app);
+  // si salva e si riapre l'app dentro il guscio, cosi non si esce dalla cornice.
+  window.addEventListener('message', function (e) {
+    var d = e.data || {}, t;
+    if (!A.param || d.appx !== 'chiave' || !/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|script\.google\.com)$/.test(String(e.origin || ''))) return;
+    t = String(d.k || '').replace(/[^A-Za-z0-9]/g, '');
+    if (!t) return;
+    set('tok', t);
+    url = A.url + (A.url.indexOf('?') < 0 ? '?' : '&') + A.param + '=' + t;
+    apri();
+  });
   if (solo || q.get('diretto') === '1' || get('salta') === '1') apri(); else guida();
 })();
