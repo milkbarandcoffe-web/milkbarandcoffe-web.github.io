@@ -19,4 +19,4 @@ App esistenti: `ipx/` (IPRATICO-X), `mio/` (Il mio listino dei camerieri, `param
 Regola della suite: ogni app nuova ha il suo guscio qui dal giorno in cui nasce (elenco in `gas-codice/SUITE/gusci.json`).
 
 ## Chiave sbagliata dentro il guscio (25/11/2026)
-Se la pagina dell app chiede la chiave e si preme ENTRA, la pagina manda la chiave al guscio (`postMessage {appx:'chiave', k}` verso questo sito). Il guscio la accetta solo da pagine Google (googleusercontent.com / script.google.com), la salva (`appx_ID_tok`) e riapre l app nell iframe: non si esce dalla cornice. Lo fanno ORDINI-X 0.5 e MAGICPRINT-X 4.14 (`goto`).
+Se la pagina dell app chiede la chiave e si preme ENTRA, la pagina manda la chiave al guscio (`postMessage {appx:'chiave', k}` verso questo sito). Il guscio la accetta solo da pagine Google (googleusercontent.com / script.google.com), la salva (`appx_ID_tok`) e riapre l app nell iframe: non si esce dalla cornice. Lo fanno ORDINI-X 0.5 e MAGICPRINT-X 4.14 (`goto`). La chiave del link scartata si ricorda (`appx_ID_scarta`): se l icona la ripete a ogni apertura vale quella salvata.

@@ -13,6 +13,8 @@
   function set(k, v) { try { LS.setItem('appx_' + A.id + '_' + k, v); } catch (e) {} }
   if (A.param) {
     var t = (q.get(A.param) || q.get('c') || '').replace(/[^A-Za-z0-9]/g, '');
+    // chiave del link scartata dall'app (corretta con ENTRA): l'icona la ripete a ogni apertura, vale quella salvata
+    if (t && t === get('scarta')) t = '';
     if (t) set('tok', t); else t = get('tok') || '';
     if (!t) { scrivi('<h2>Link incompleto</h2><p>Apri il link che ti è arrivato per mail.</p>'); return; }
     url += (url.indexOf('?') < 0 ? '?' : '&') + A.param + '=' + t;
@@ -62,6 +64,8 @@
     if (!A.param || d.appx !== 'chiave' || !/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|script\.google\.com)$/.test(String(e.origin || ''))) return;
     t = String(d.k || '').replace(/[^A-Za-z0-9]/g, '');
     if (!t) return;
+    var v = (q.get(A.param) || q.get('c') || '').replace(/[^A-Za-z0-9]/g, '');
+    if (v && v !== t) set('scarta', v);
     set('tok', t);
     url = A.url + (A.url.indexOf('?') < 0 ? '?' : '&') + A.param + '=' + t;
     apri();
