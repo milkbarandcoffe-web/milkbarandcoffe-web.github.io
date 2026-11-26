@@ -70,5 +70,13 @@
     url = A.url + (A.url.indexOf('?') < 0 ? '?' : '&') + A.param + '=' + t;
     apri();
   });
+  // Finestra su PC (facoltativa, APPX.finestra = {w, h}): app installata aperta sul computer -> finestra di quella misura, al centro.
+  function finestra() {
+    var F = A.finestra, s = window.screen;
+    if (!F || !solo || ios || android || !s || s.availWidth < 1000) return;
+    var w = Math.min(F.w, s.availWidth), h = Math.min(F.h, s.availHeight);
+    try { window.resizeTo(w, h); window.moveTo((s.availLeft || 0) + Math.round((s.availWidth - w) / 2), (s.availTop || 0) + Math.round((s.availHeight - h) / 2)); } catch (e) {}
+  }
+  finestra();
   if (solo || q.get('diretto') === '1' || get('salta') === '1') apri(); else guida();
 })();
