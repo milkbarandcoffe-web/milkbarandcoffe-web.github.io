@@ -14,7 +14,7 @@ Un'app Apps Script non si può installare da sola (gira dentro una pagina di Goo
 - Dopo l'installazione: "App installata ✓, per completare riaprila dall'icona" + OK (chiude la scheda, se il browser lo permette).
 - Dall'icona: apre subito l'app. Con `?diretto=1` apre l'app anche nel browser. "Apri senza installare" salta la guida (ricordato sul telefono).
 
-App esistenti: `ipx/` (IPRATICO-X), `mio/` (Il mio listino dei camerieri, `param: 'k'`), `mpx/` (MAGICPRINT-X, celeste #0288d1, `param: 'k'`), `ox/` (ORDINI-X, giallo #f9a825, `param: 'k'`, testo scuro).
+App esistenti: `ipx/` (IPRATICO-X), `mio/` (Il mio listino dei camerieri, `param: 'k'`), `mpx/` (MAGICPRINT-X, celeste #0288d1, `param: 'k'`), `ox/` (ORDINI-X, giallo #f9a825, `param: 'k'`, testo scuro), `pnx/` (PIENISSIMO-X, verde menta #7ddc9c, `param: 'k'`, testo scuro).
 
 Regola della suite: ogni app nuova ha il suo guscio qui dal giorno in cui nasce (elenco in `gas-codice/SUITE/gusci.json`).
 
