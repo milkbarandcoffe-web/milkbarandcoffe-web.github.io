@@ -42,7 +42,7 @@
   function testa() { return '<div class="top"><img src="icona-192.png" alt=""><div><h1>' + A.nome + '</h1><small>Pasticceria Zavan</small></div></div>'; }
   function guida() {
     var h = testa();
-    if (get('inst') === '1') h += '<div class="box">L\'app è già installata: aprila dall\'<b>icona ' + A.nome + '</b> sulla schermata Home.</div>';
+    if (get('inst') === '1') h += '<div class="box" id="gi">L\'app è già installata: aprila dall\'<b>icona ' + A.nome + '</b> sulla schermata Home.</div>';
     else h += '<p><b>Installa l\'app</b> sul telefono: la trovi sempre sulla schermata Home, a tutto schermo.</p>';
     if (ios) h += '<ol>' + (safari ? '' : '<li>Apri questo link con <b>Safari</b> (su iPhone si installa solo da Safari).</li>') +
       '<li>Tocca il tasto <b>Condividi</b> <span class="k">⬆︎</span> in basso.</li><li>Scorri e tocca <b>Aggiungi alla schermata Home</b>.</li><li>Tocca <b>Aggiungi</b> in alto a destra.</li><li>Apri l\'app dall\'icona <b>' + A.nome + '</b>.</li></ol>';
@@ -53,7 +53,8 @@
     scrivi(h);
     if (dP) mostraBottone();
   }
-  function mostraBottone() { var b = D.getElementById('bi'); if (b) { b.style.display = 'block'; var pm = D.getElementById('pm'); if (pm) pm.style.display = 'none'; } }
+  // Chrome offre INSTALLA solo se l'app non è installata (es. disinstallata): tolgo l'avviso "già installata".
+  function mostraBottone() { var gi = D.getElementById('gi'); if (gi) { gi.remove(); set('inst', '0'); } var b = D.getElementById('bi'); if (b) { b.style.display = 'block'; var pm = D.getElementById('pm'); if (pm) pm.style.display = 'none'; } }
   window.APPX_ins = function () { if (!dP) return; dP.prompt(); dP.userChoice.then(function (r) { if (r.outcome === 'accepted') fatto(); dP = null; }); };
   window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); dP = e; mostraBottone(); });
   window.addEventListener('appinstalled', fatto);
