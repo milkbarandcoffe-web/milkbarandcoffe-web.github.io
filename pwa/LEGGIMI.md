@@ -14,9 +14,15 @@ Un'app Apps Script non si può installare da sola (gira dentro una pagina di Goo
 - Dopo l'installazione: "App installata ✓, per completare riaprila dall'icona" + OK (chiude la scheda, se il browser lo permette).
 - Dall'icona: apre subito l'app. Con `?diretto=1` apre l'app anche nel browser. "Apri senza installare" salta la guida (ricordato sul telefono).
 
-App esistenti: `ipx/` (IPRATICO-X), `mio/` (Il mio listino dei camerieri, `param: 'k'`), `mpx/` (MAGICPRINT-X, celeste #0288d1, `param: 'k'`), `ox/` (ORDINI-X, giallo #f9a825, `param: 'k'`, testo scuro), `pnx/` (PIENISSIMO-X, verde menta #7ddc9c, `param: 'k'`, testo scuro).
+App esistenti: `ipx/` (IPRATICO-X), `mio/` (Il mio listino dei camerieri, `param: 'k'`), `mpx/` (PRINT-X, ex MAGICPRINT-X, `param: 'k'`), `msx/` (MAGICSUITE-X, marrone scuro #4e342e, `param: 'k'`, guscio della suite `pwa/guscio-suite.js`), `ox/` (ORDINI-X, giallo #f9a825, `param: 'k'`, testo scuro), `pnx/` (PIENISSIMO-X, verde menta #7ddc9c, `param: 'k'`, testo scuro).
 
 Regola della suite: ogni app nuova ha il suo guscio qui dal giorno in cui nasce (elenco in `gas-codice/SUITE/gusci.json`).
 
 ## Chiave sbagliata dentro il guscio (25/11/2026)
 Se la pagina dell app chiede la chiave e si preme ENTRA, la pagina manda la chiave al guscio (`postMessage {appx:'chiave', k}` verso questo sito). Il guscio la accetta solo da pagine Google (googleusercontent.com / script.google.com), la salva (`appx_ID_tok`) e riapre l app nell iframe: non si esce dalla cornice. Lo fanno ORDINI-X 0.5 e MAGICPRINT-X 4.14 (`goto`). La chiave del link scartata si ricorda (`appx_ID_scarta`): se l icona la ripete a ogni apertura vale quella salvata.
+
+## Guscio della suite MAGICSUITE-X (26/11/2026)
+`msx/` usa `pwa/guscio-suite.js` (copia di `guscio.js` con il cambio app; `guscio.js` resta per le app singole e non e cambiato).
+- La home di MAGICSUITE-X manda `{appx:'apri', url, colore, su, nome}`: la cornice apre quell app (solo link `script.google.com/macros/s/.../exec?...`), la barra del telefono prende il suo colore, il guscio risponde `{appx:'ok'}` (senza risposta la pagina apre il link fuori dal guscio).
+- La X in alto a destra delle app (SUITE 1.2, solo con `suite=1` nel link) manda `{appx:'casa'}`: si torna a MAGICSUITE-X.
+- `{appx:'chiave'}` con un app aperta: riapre quell app con la chiave nuova (la chiave della suite resta).
