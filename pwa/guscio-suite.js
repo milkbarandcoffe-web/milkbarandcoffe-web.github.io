@@ -28,7 +28,7 @@
   casa = url;
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
   var css = D.createElement('style');
-  css.textContent = 'html,body{margin:0;height:100%;background:' + C + '}body{font:17px system-ui,-apple-system,sans-serif;color:#222}' +
+  css.textContent = 'html,body{margin:0;height:100%;background:#fff}body{font:17px system-ui,-apple-system,sans-serif;color:#222}' +
     'iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#fff}' +
     '#g{min-height:100%;background:#fff;box-sizing:border-box;padding:20px 18px 40px;max-width:560px;margin:0 auto}' +
     '#g .top{display:flex;align-items:center;gap:14px;margin-bottom:10px}#g .top img{width:64px;height:64px;border-radius:16px}' +
@@ -49,7 +49,9 @@
   function scrivi(h) { D.body.innerHTML = '<div id="g">' + h + '</div>'; }
   function apri() { D.body.innerHTML = ''; var f = D.createElement('iframe'); f.src = url; f.allow = 'clipboard-write; camera'; D.body.appendChild(f); }
   // Colore della barra del telefono e dello sfondo: quello dell'app aperta (Android lo segue; iPhone da provare).
+  // 27/11 scelta utente: contenitore tutto bianco, barre del telefono sempre bianche; il colore di ogni app resta nella sua intestazione.
   function colore(c) {
+    c = '#ffffff';
     var m = D.querySelector('meta[name=theme-color]');
     if (!m) { m = D.createElement('meta'); m.name = 'theme-color'; D.head.appendChild(m); }
     m.content = c; D.documentElement.style.background = c; D.body.style.background = c;
