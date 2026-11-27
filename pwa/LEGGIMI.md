@@ -26,3 +26,4 @@ Se la pagina dell app chiede la chiave e si preme ENTRA, la pagina manda la chia
 - La home di MAGICSUITE-X manda `{appx:'apri', url, colore, su, nome}`: la cornice apre quell app (solo link `script.google.com/macros/s/.../exec?...`), la barra del telefono prende il suo colore, il guscio risponde `{appx:'ok'}` (senza risposta la pagina apre il link fuori dal guscio).
 - La X in alto a destra delle app (SUITE 1.2, solo con `suite=1` nel link) manda `{appx:'casa'}`: si torna a MAGICSUITE-X.
 - `{appx:'chiave'}` con un app aperta: riapre quell app con la chiave nuova (la chiave della suite resta).
+- Senza chiave (iPhone/iPad: l app aperta dall icona della Home non vede quello che Safari ha salvato e parte senza ?k=): chiede il PIN, lo salva nell app e riparte con ?k= (27/11).

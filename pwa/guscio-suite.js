@@ -21,8 +21,9 @@
     // chiave del link scartata dall'app (corretta con ENTRA): l'icona la ripete a ogni apertura, vale quella salvata
     if (t && t === get('scarta')) t = '';
     if (t) set('tok', t); else t = get('tok') || '';
-    if (!t) { scrivi('<h2>Link incompleto</h2><p>Apri il link che ti è arrivato per mail.</p>'); return; }
-    url += (url.indexOf('?') < 0 ? '?' : '&') + A.param + '=' + t;
+    // iPhone/iPad: l'app aperta dall'icona della Home non vede cio che Safari ha salvato e riparte senza ?k= -> si chiede il PIN (27/11).
+    var chiedi = !t;
+    if (t) url += (url.indexOf('?') < 0 ? '?' : '&') + A.param + '=' + t;
   }
   casa = url;
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
@@ -36,6 +37,15 @@
     '#g .p{background:' + C + ';color:' + SU + '}#g .s{background:#fff;color:' + CT + '}#g .k{display:inline-block;border:1px solid #bbb;border-radius:8px;padding:0 8px;font-weight:700;background:#f5f5f5}' +
     '#g .box{background:#fff3e0;border-radius:12px;padding:12px;margin:12px 0}#g small{color:#777}';
   D.head.appendChild(css);
+  if (chiedi) {
+    scrivi(testa() + '<h2>Scrivi il PIN</h2><p>Lo stesso delle app della suite. Su questo dispositivo te lo chiede una volta sola.</p>' +
+      '<input id="pk" type="password" autocomplete="off" style="width:100%;box-sizing:border-box;font-size:20px;padding:14px;border:2px solid ' + C + ';border-radius:14px">' +
+      '<a class="b p" id="pok">ENTRA</a>');
+    var vaiPin = function () { var k = (D.getElementById('pk').value || '').replace(/[^A-Za-z0-9]/g, ''); if (!k) return; set('tok', k); location.replace(location.pathname + '?' + A.param + '=' + k); };
+    D.getElementById('pok').onclick = vaiPin;
+    D.getElementById('pk').onkeydown = function (e) { if (e.key === 'Enter') vaiPin(); };
+    return;
+  }
   function scrivi(h) { D.body.innerHTML = '<div id="g">' + h + '</div>'; }
   function apri() { D.body.innerHTML = ''; var f = D.createElement('iframe'); f.src = url; f.allow = 'clipboard-write; camera'; D.body.appendChild(f); }
   // Colore della barra del telefono e dello sfondo: quello dell'app aperta (Android lo segue; iPhone da provare).
