@@ -27,3 +27,6 @@ Se la pagina dell app chiede la chiave e si preme ENTRA, la pagina manda la chia
 - La X in alto a destra delle app (SUITE 1.2, solo con `suite=1` nel link) manda `{appx:'casa'}`: si torna a MAGICSUITE-X.
 - `{appx:'chiave'}` con un app aperta: riapre quell app con la chiave nuova (la chiave della suite resta).
 - Senza chiave (iPhone/iPad: l app aperta dall icona della Home non vede quello che Safari ha salvato e parte senza ?k=): chiede il PIN, lo salva nell app e riparte con ?k= (27/11).
+
+## Microfono per le app (27/11/2026)
+Nella cornice dell'app il microfono non e permesso (iframe senza `allow=microphone`, e le cornici di Google sotto): su Android il riconoscimento vocale parte ma non sente. In `guscio.js` e `guscio-suite.js` il guscio ascolta al posto dell'app: l'app manda `{appx:'detta'}` (o `'detta-stop'`), il guscio usa SpeechRecognition (it-IT) e risponde a quella pagina con `{appx:'dettato', via | t (testo finora) | err | fine}`. Solo da pagine Google. Lo usa PIENISSIMO-X 0.7 (chat Claudio); se il guscio non risponde l'app prova da sola. La prima volta il telefono chiede il permesso del microfono per questo sito. iPhone/iPad da provare.

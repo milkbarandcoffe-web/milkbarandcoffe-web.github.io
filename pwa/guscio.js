@@ -71,6 +71,23 @@
     url = A.url + (A.url.indexOf('?') < 0 ? '?' : '&') + A.param + '=' + t;
     apri();
   });
+  // Microfono per le app (27/11, PIENISSIMO-X 0.7): nella cornice dell'app il microfono non e permesso (provato su Android: parte ma non sente),
+  // quindi ascolta il guscio, che e la pagina principale. L'app manda {appx:'detta'} (o 'detta-stop'); il guscio risponde all'app con
+  // {appx:'dettato', via|t|err|fine}. Solo dalle pagine Google, come la chiave.
+  var ric = null;
+  window.addEventListener('message', function (e) {
+    var d = e.data || {}, src = e.source, org = String(e.origin || '');
+    if ((d.appx !== 'detta' && d.appx !== 'detta-stop') || !/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|script\.google\.com)$/.test(org)) return;
+    if (d.appx === 'detta-stop' || ric) { if (ric) { try { ric.stop(); } catch (x) {} } return; }
+    var R = window.SpeechRecognition || window.webkitSpeechRecognition;
+    var manda = function (o) { o.appx = 'dettato'; try { src.postMessage(o, org); } catch (x) {} };
+    if (!R) { manda({ err: 'non-supportato', fine: true }); return; }
+    var r = new R(); r.lang = 'it-IT'; r.interimResults = true; r.continuous = false; ric = r;
+    r.onresult = function (ev) { var t = ''; for (var i = 0; i < ev.results.length; i++) t += ev.results[i][0].transcript; manda({ t: t }); };
+    r.onerror = function (ev) { manda({ err: String(ev.error || 'errore') }); };
+    r.onend = function () { if (ric === r) ric = null; manda({ fine: true }); };
+    try { r.start(); manda({ via: true }); } catch (x) { ric = null; manda({ err: 'avvio', fine: true }); }
+  });
   // Finestra su PC (facoltativa, APPX.finestra = {w, h}): app installata aperta sul computer -> finestra di quella misura, al centro.
   function finestra() {
     var F = A.finestra, s = window.screen;
