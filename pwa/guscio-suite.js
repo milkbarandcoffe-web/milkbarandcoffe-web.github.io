@@ -60,6 +60,8 @@
     url = u; aperta = app;
     var f = D.querySelector('iframe');
     if (!f) { colore(c); apri(); return; }
+    // Sfondo (dietro la barra in basso di Android) subito, come nella prima versione; barra in alto (theme-color) quando la pagina e caricata.
+    D.documentElement.style.background = c; D.body.style.background = c;
     var fatto = false, ok = function () { if (fatto) return; fatto = true; f.onload = null; colore(c); };
     f.onload = ok; setTimeout(ok, 15000);
     f.src = u;
