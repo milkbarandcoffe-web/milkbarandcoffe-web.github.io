@@ -30,3 +30,7 @@ Se la pagina dell app chiede la chiave e si preme ENTRA, la pagina manda la chia
 
 ## Microfono per le app (27/11/2026)
 Nella cornice dell'app il microfono non e permesso (iframe senza `allow=microphone`, e le cornici di Google sotto): su Android il riconoscimento vocale parte ma non sente. In `guscio.js` e `guscio-suite.js` il guscio ascolta al posto dell'app: l'app manda `{appx:'detta'}` (o `'detta-stop'`), il guscio usa SpeechRecognition (it-IT) e risponde a quella pagina con `{appx:'dettato', via | t (testo finora) | err | fine}`. Solo da pagine Google. Lo usa PIENISSIMO-X 0.7 (chat Claudio); se il guscio non risponde l'app prova da sola. La prima volta il telefono chiede il permesso del microfono per questo sito. iPhone/iPad da provare.
+
+## Ricarica e ritorno in suite (27/11/2026)
+- `{appx:'ricarica'}` (tasto ricarica delle app, da pagine Google): il guscio ricarica la cornice. Ricaricare dall'interno della cornice di Google (`location.reload`) lasciava la pagina bianca.
+- `guscio-suite.js`: MAGICSUITE-X resta caricata nella cornice `fc`; ogni app si apre in una cornice nuova sopra (`fa`). Con `{appx:'casa'}` la cornice dell'app si toglie e la suite riceve `{appx:'tornato'}` (alla pagina che aveva mandato 'apri'): mostra le app di prima con il cerchio che gira e si aggiorna.

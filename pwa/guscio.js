@@ -62,6 +62,8 @@
   // si salva e si riapre l'app dentro il guscio, cosi non si esce dalla cornice.
   window.addEventListener('message', function (e) {
     var d = e.data || {}, t;
+    // Tasto ricarica dell'app (27/11): ricaricare dall'interno della cornice di Google lascia la pagina bianca, quindi ricarica il guscio.
+    if (d.appx === 'ricarica' && /^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|script\.google\.com)$/.test(String(e.origin || ''))) { try { e.source.postMessage({appx: 'ricarico'}, e.origin); } catch (x) {} var f = D.querySelector('iframe'); if (f) f.src = url; return; }
     if (!A.param || d.appx !== 'chiave' || !/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|script\.google\.com)$/.test(String(e.origin || ''))) return;
     t = String(d.k || '').replace(/[^A-Za-z0-9]/g, '');
     if (!t) return;

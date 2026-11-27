@@ -13,7 +13,7 @@
   var ua = navigator.userAgent, ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && 'ontouchend' in D);
   var android = /Android/.test(ua), safari = ios && !/CriOS|FxiOS|EdgiOS/.test(ua);
   var solo = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
-  var q = new URLSearchParams(location.search), url = A.url, dP = null, casa = '', aperta = null;
+  var q = new URLSearchParams(location.search), url = A.url, dP = null, casa = '', aperta = null, fa = null, casaWin = null;
   function get(k) { try { return LS.getItem('appx_' + A.id + '_' + k); } catch (e) { return null; } }
   function set(k, v) { try { LS.setItem('appx_' + A.id + '_' + k, v); } catch (e) {} }
   if (A.param) {
@@ -47,7 +47,8 @@
     return;
   }
   function scrivi(h) { D.body.innerHTML = '<div id="g">' + h + '</div>'; }
-  function apri() { D.body.innerHTML = ''; var f = D.createElement('iframe'); f.src = url; f.allow = 'clipboard-write; camera'; D.body.appendChild(f); }
+  // fc = cornice di MAGICSUITE-X (resta aperta sotto), fa = cornice dell'app aperta sopra (27/11: al ritorno la suite c'e gia, niente "Carico le app").
+  function apri() { D.body.innerHTML = ''; fa = null; var f = D.createElement('iframe'); f.id = 'fc'; f.src = url; f.allow = 'clipboard-write; camera'; D.body.appendChild(f); }
   // Colore della barra del telefono e dello sfondo: quello dell'app aperta (Android lo segue; iPhone da provare).
   // 27/11 scelta utente: contenitore tutto bianco, barre del telefono sempre bianche; il colore di ogni app resta nella sua intestazione.
   function colore(c) {
@@ -56,17 +57,20 @@
     if (!m) { m = D.createElement('meta'); m.name = 'theme-color'; D.head.appendChild(m); }
     m.content = c; D.documentElement.style.background = c; D.body.style.background = c;
   }
-  // Stessa cornice (come prima: con la cornice nuova la barra in basso di Android restava marrone, 27/11);
-  // il colore cambia quando la nuova pagina e caricata, non prima.
+  // App aperta in una cornice nuova sopra la suite (che resta caricata sotto). Contenitore tutto bianco: il colore non cambia piu (27/11).
   function cambia(u, c, app) {
     url = u; aperta = app;
-    var f = D.querySelector('iframe');
-    if (!f) { colore(c); apri(); return; }
-    // Sfondo (dietro la barra in basso di Android) subito, come nella prima versione; barra in alto (theme-color) quando la pagina e caricata.
-    D.documentElement.style.background = c; D.body.style.background = c;
-    var fatto = false, ok = function () { if (fatto) return; fatto = true; f.onload = null; colore(c); };
-    f.onload = ok; setTimeout(ok, 15000);
-    f.src = u;
+    if (!D.getElementById('fc')) { colore(c); apri(); return; }
+    if (fa) fa.remove();
+    fa = D.createElement('iframe'); fa.src = u; fa.allow = 'clipboard-write; camera'; fa.style.zIndex = '2'; D.body.appendChild(fa);
+    colore(c);
+  }
+  // Ritorno alla suite: si toglie la cornice dell'app; la suite e gia li e si aggiorna da sola ({appx:'tornato'}).
+  function aCasa() {
+    if (fa) { fa.remove(); fa = null; }
+    aperta = null; url = casa;
+    if (!D.getElementById('fc')) { apri(); return; }
+    if (casaWin) { try { casaWin.w.postMessage({appx: 'tornato'}, casaWin.o); } catch (x) {} }
   }
   window.APPX_apri = function () { set('salta', '1'); apri(); };
   function fatto() {
@@ -103,10 +107,13 @@
       var u = String(d.url || ''), c = /^#[0-9a-fA-F]{6}$/.test(String(d.colore || '')) ? d.colore : C;
       if (!/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec\?[\w=&%.-]*$/.test(u)) return;
       try { e.source.postMessage({appx: 'ok'}, e.origin); } catch (x) {}
+      casaWin = {w: e.source, o: e.origin}; // la pagina della suite: le si dice quando si torna
       cambia(u, c, String(d.nome || 'app'));
       return;
     }
-    if (d.appx === 'casa') { if (aperta) cambia(casa, C, null); return; }
+    if (d.appx === 'casa') { if (aperta) aCasa(); return; }
+    // Tasto ricarica delle app (27/11): ricaricare dall'interno della cornice di Google lascia la pagina bianca, quindi ricarica il guscio.
+    if (d.appx === 'ricarica') { try { e.source.postMessage({appx: 'ricarico'}, e.origin); } catch (x) {} if (fa) fa.src = url; else { var fc = D.getElementById('fc'); if (fc) fc.src = casa; } return; }
     // Chiave nuova scritta dentro un'app aperta dalla suite: si riapre quell'app con la chiave nuova (la chiave della suite non cambia).
     if (d.appx === 'chiave' && aperta) {
       t = String(d.k || '').replace(/[^A-Za-z0-9]/g, '');
