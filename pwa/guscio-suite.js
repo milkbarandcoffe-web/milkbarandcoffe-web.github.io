@@ -54,20 +54,15 @@
     if (!m) { m = D.createElement('meta'); m.name = 'theme-color'; D.head.appendChild(m); }
     m.content = c; D.documentElement.style.background = c; D.body.style.background = c;
   }
-  // La nuova app si carica dietro quella che si vede; quando e pronta prende il posto della vecchia e solo allora cambia il colore (27/11).
+  // Stessa cornice (come prima: con la cornice nuova la barra in basso di Android restava marrone, 27/11);
+  // il colore cambia quando la nuova pagina e caricata, non prima.
   function cambia(u, c, app) {
     url = u; aperta = app;
-    var vecchie = D.querySelectorAll('iframe');
-    if (!vecchie.length) { colore(c); apri(); return; }
-    var n = D.createElement('iframe'), fatto = false;
-    n.allow = 'clipboard-write; camera'; n.style.visibility = 'hidden';
-    var mostra = function () {
-      if (fatto) return; fatto = true;
-      for (var i = 0; i < vecchie.length; i++) vecchie[i].remove();
-      n.style.visibility = ''; colore(c);
-    };
-    n.onload = mostra; setTimeout(mostra, 15000);
-    n.src = u; D.body.appendChild(n);
+    var f = D.querySelector('iframe');
+    if (!f) { colore(c); apri(); return; }
+    var fatto = false, ok = function () { if (fatto) return; fatto = true; f.onload = null; colore(c); };
+    f.onload = ok; setTimeout(ok, 15000);
+    f.src = u;
   }
   window.APPX_apri = function () { set('salta', '1'); apri(); };
   function fatto() {
